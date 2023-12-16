@@ -1,12 +1,18 @@
+import { useState } from "react";
+import Register from "./components/Register";
+
 function App() {
+  const [darkMode, setDarkMode] = useState<boolean>(true);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
   return (
-    <>
-      <div className="dark" data-mode="dark">
-        <h1 className="m-4 bg-white text-xl font-bold text-black dark:bg-gray-900 dark:text-white">
-          This is the heading!
-        </h1>
-      </div>
-    </>
+    <div data-mode={darkMode ? "dark" : ""}>
+      <Register />
+    </div>
   );
 }
 
