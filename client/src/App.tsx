@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Register from "./components/Register";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [darkMode, setDarkMode] = useState<boolean>(true);
@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div data-mode={darkMode ? "dark" : ""}>
-      <Register />
+      <Sidebar />
     </div>
   );
 }

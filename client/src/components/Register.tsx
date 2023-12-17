@@ -5,8 +5,8 @@ import Buttons from "./Buttons";
 
 interface Props {}
 
-const Register = (props: Props) => {
-  console.log(props);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Register = (_props: Props) => {
   return (
     <div className="flex h-screen w-screen justify-center dark:bg-dark md:items-start lg:items-center lg:py-8">
       <div className="flex w-full justify-center">
@@ -84,12 +84,12 @@ const Register = (props: Props) => {
             </div>
 
             <div className="my-8 mb-4 text-center">
-              <p className="py-2 text-start text-lg font-bold">
+              <p className="py-4 text-start text-lg font-bold">
                 Already have an account?
               </p>
               <Buttons
                 text="Sign in"
-                additionalStyles=" bg-[black] text-blue-400 border border-blue-400"
+                additionalStyles=" bg-[black] text-blue-400 border-[0.25px] border-slate-100"
               />
             </div>
           </div>

@@ -9,6 +9,7 @@ export default {
       "accent-dark": "#16181C",
       "hover-dark": "#080808",
       "btn-dark": "#1D9BF0",
+      "hover-bg-highlight": "#495968",
     },
     fontFamily: {
       roboto: "'Roboto', sans-serif",

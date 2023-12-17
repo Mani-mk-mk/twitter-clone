@@ -1,6 +1,6 @@
 import { IconPropTypes } from "../../types/IconPropTypes";
 
-const Home = ({ color = "black" }: IconPropTypes) => {
+const HomeIcon = ({ color = "black" }: IconPropTypes) => {
   return (
     <div>
       <svg viewBox="0 0 24 24" fill={color} aria-hidden="true">
@@ -12,4 +12,4 @@ const Home = ({ color = "black" }: IconPropTypes) => {
   );
 };
 
-export default Home;
+export default HomeIcon;
