@@ -34,8 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Change directory
-        run: |
-          ls
+        working-directory: ./client
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
