@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Change directory
-        run: cd client/
+        run: cd client
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
