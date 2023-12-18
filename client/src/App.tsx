@@ -1,17 +1,20 @@
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
+import Home from "./pages/Home";
+// import Register from "./components/Register";
 
 function App() {
   const [darkMode, setDarkMode] = useState<boolean>(true);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
+  // const toggleDarkMode = () => {
+  //   setDarkMode((prev) => !prev);
+  // };
+  setDarkMode(true);
 
   return (
     <div data-mode={darkMode ? "dark" : ""}>
-      <Sidebar />
+      <Home />
+      {/* <Register /> */}
     </div>
   );
 }
