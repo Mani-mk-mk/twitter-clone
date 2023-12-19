@@ -38,6 +38,7 @@ jobs:
       - name: Change to client directory
         run: cd client || exit 1
       - name: Print Current Directory (after change)
+        working-direcory: ./client
         run: |
           pwd
           ls -la
@@ -46,7 +47,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14 # Choose the appropriate Node.js version
+          node-version: 20 # Choose the appropriate Node.js version
           cache: 'npm'
       - name: Install dependencies
         run: npm install
