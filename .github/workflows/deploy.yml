@@ -27,6 +27,8 @@ jobs:
         run: pwd
       - name: Change directory
         run: cd ./client
+      - name: Print Current Directory
+        run: pwd
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
