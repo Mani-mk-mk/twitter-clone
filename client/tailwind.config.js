@@ -14,6 +14,15 @@ export default {
     fontFamily: {
       roboto: "'Roboto', sans-serif",
     },
+    borderColor: {
+      borderColor: "rgb(47, 51, 54)",
+      header: "rgb(29, 155, 240)",
+    },
+    colors: {
+      "unhighlighted-color": "#6a6f74",
+      white: "white",
+      black: "black",
+    },
     extend: {},
   },
   plugins: [],
