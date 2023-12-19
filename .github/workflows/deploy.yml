@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Print Current Directory
+        run: pwd
       - name: Change directory
         run: cd ./client
       - name: Set up Node
