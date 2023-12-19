@@ -17,7 +17,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </div>
           }
         />
-        <Route path="/home" element={<Home />} />
+        <Route
+          path="/home"
+          element={
+            <div data-mode="dark">
+              <Home />
+            </div>
+          }
+        />
       </Routes>
     </Router>
   </React.StrictMode>,
