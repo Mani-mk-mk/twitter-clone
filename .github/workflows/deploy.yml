@@ -25,8 +25,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Print Current Directory
         run: pwd
-      - name: Change directory
-        run: cd ./client
+      - name: Print Current Directory Files
+        run: |
+          pwd
+          ls -la
+      - name: Change to client directory
+        run: cd client
+      - name: Print Current Directory (after change)
+        run: |
+          pwd
+          ls -la
       - name: Print Current Directory
         run: pwd
       - name: Set up Node
