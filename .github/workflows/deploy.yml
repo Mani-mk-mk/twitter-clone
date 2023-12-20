@@ -1,48 +1,53 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ['main']
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./client
-    # defaults:
-    #   run:
-    #     working-directory: ./client/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Change directory
-        working-directory: ./client
+      - name: Print Current Directory
+        run: pwd
+      - name: Print Current Directory Files
+        run: |
+          pwd
+          ls -la
+      - name: Debugging - List contents of client directory
+        run: ls -la client
+      - name: Initialize and update submodules
+        run: |
+          git submodule init
+          git submodule update
+      - name: Change to client directory
+        run: cd client || exit 1
+      - name: Print Current Directory (after change)
+        working-direcory: ./client
+        run: |
+          pwd
+          ls -la
+      - name: Print Current Directory
+        run: pwd
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20 # Choose the appropriate Node.js version
           cache: 'npm'
       - name: Install dependencies
         run: npm install
@@ -51,10 +56,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
-          # Upload dist repository
-          path: './dist'
+          name: dist
+          path: ./dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifact: dist
