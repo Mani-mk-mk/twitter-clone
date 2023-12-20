@@ -34,10 +34,6 @@ jobs:
           pwd
           ls -la
 
-      - name: Debugging - List contents of client directory
-        run: |
-          ls -la client
-
       - name: Initialize and update submodules
         run: |
           git submodule init
@@ -46,7 +42,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14 # Choose the appropriate Node.js version
+          node-version: 20 # Choose the appropriate Node.js version
           cache: 'npm'
 
       - name: Install dependencies
