@@ -37,6 +37,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
+          path: ./client
           node-version: 20 # Choose the appropriate Node.js version
           cache: 'npm'
 
