@@ -21,6 +21,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,15 +42,7 @@ jobs:
         run: |
           git submodule init
           git submodule update
-
-      - name: Change to client directory
-        run: cd client || exit 1
-
-      - name: Print Current Directory (after change)
-        run: |
-          pwd
-          ls -la
-
+          
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
