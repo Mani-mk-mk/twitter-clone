@@ -35,8 +35,8 @@ const posts: PostProps[] = [
     images: [
       "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
       "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
-      "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
-      "https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360",
+      // "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
+      // "https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360",
     ],
   },
   {
@@ -53,9 +53,9 @@ const posts: PostProps[] = [
     },
     images: [
       "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
-      "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
-      "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
-      "https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360",
+      // "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
+      // "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
+      // "https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360",
     ],
   },
 ];

@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import HomeHeader from "../components/HomeHeader";
 import posts from "../data/post";
 import Post from "../components/Post";
+import PostBox from "../components/PostBox";
 
 const Home = () => {
   const navElementRef = useRef<HTMLDivElement | null>(null);
@@ -43,7 +44,9 @@ const Home = () => {
         <div className=" border-borderColor relative h-[60px] border border-r-0 border-t-0 border-solid">
           <HomeHeader tabIndex={tabIndex} setTabIndex={setTabIndex} />
         </div>
-        <div></div>
+        <div>
+          <PostBox />
+        </div>
         {posts.map((post, key) => (
           <Post {...post} key={key} />
         ))}
