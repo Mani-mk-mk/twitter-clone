@@ -56,6 +56,12 @@ jobs:
         with:
           name: dist
           path: ./client/dist
+      
+      - name: Print Current Directory
+        run: |
+          pwd
+          ls -la
+
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -63,4 +69,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           artifact: dist
-          path: ./client
+          path: ./client/dist
