@@ -4,6 +4,7 @@ import HomeHeader from "../components/HomeHeader";
 import posts from "../data/post";
 import Post from "../components/Post";
 import PostBox from "../components/PostBox";
+import PremiumModal from "../components/PremiumModal";
 
 const Home = () => {
   const navElementRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,8 @@ const Home = () => {
 
   return (
     <div data-mode="dark" className="flex dark:bg-[black]">
+      <PremiumModal />
+
       <div className="relative">
         <nav ref={navElementRef} className="border-borderColor fixed border-r">
           <Sidebar />

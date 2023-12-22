@@ -1,4 +1,5 @@
 import SettingsIcon from "../assets/icons/SettingsIcon";
+import SearchBar from "./SearchBar";
 
 interface HeaderProps {
   tabIndex: number;
@@ -7,36 +8,48 @@ interface HeaderProps {
 
 const HomeHeader = (props: HeaderProps) => {
   console.log(props);
-  return (
-    <div className="sticky top-0 flex h-full w-full items-center justify-between ">
-      <div className="flex h-full w-full items-center justify-between dark:bg-dark">
+
+  const headerComponents = [
+    <div className="flex h-full w-full items-center justify-between dark:bg-dark">
+      <div
+        onClick={() => props.setTabIndex(0)}
+        className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
+      >
         <div
-          onClick={() => props.setTabIndex(0)}
-          className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
+          className={`flex h-full items-center ${
+            props.tabIndex === 0 &&
+            "border-header border-b-4 font-medium text-white"
+          }`}
         >
-          <div
-            className={`flex h-full items-center ${
-              props.tabIndex === 0 &&
-              "border-header border-b-4 font-medium text-white"
-            }`}
-          >
-            For you
-          </div>
-        </div>
-        <div
-          onClick={() => props.setTabIndex(1)}
-          className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
-        >
-          <div
-            className={`flex h-full items-center ${
-              props.tabIndex === 1 &&
-              "border-header border-b-4 font-medium text-white"
-            }`}
-          >
-            Following
-          </div>
+          For you
         </div>
       </div>
+      <div
+        onClick={() => props.setTabIndex(1)}
+        className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
+      >
+        <div
+          className={`flex h-full items-center ${
+            props.tabIndex === 1 &&
+            "border-header border-b-4 font-medium text-white"
+          }`}
+        >
+          Following
+        </div>
+      </div>
+    </div>,
+    <div>
+      <h1 className="px-4 text-lg font-bold text-white">Notifications</h1>
+    </div>,
+
+    <div className="group w-full px-4">
+      <SearchBar />
+    </div>,
+  ];
+
+  return (
+    <div className="sticky top-0 flex h-full w-full items-center justify-between ">
+      {headerComponents[2]}
       <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
         <div className="flex items-center justify-between ">
           <div className="h-[25px] w-[25px]">

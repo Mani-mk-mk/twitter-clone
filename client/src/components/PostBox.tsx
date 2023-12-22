@@ -1,10 +1,11 @@
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import EmojiIcon from "../assets/icons/EmojiIcon";
 import GIFIcon from "../assets/icons/GIFIcon";
 import MediaIcon from "../assets/icons/MediaIcon";
 import PollIcon from "../assets/icons/PollIcon";
 import ActionIcon from "./ActionIcon";
 import Polls from "./Polls";
+import EmojiPicker, { EmojiStyle, Theme } from "emoji-picker-react";
 
 const PostBox = () => {
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +15,13 @@ const PostBox = () => {
   };
 
   const fileIcon = useRef<null | HTMLInputElement>(null);
+
+  const [showEmojiPicker, setShowEmojiPickers] = useState(false);
+  const [showPolls, setShowPolls] = useState(false);
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPickers((showEmojiPicker) => !showEmojiPicker);
+  };
 
   const handleActionIconClick = () => {
     if (fileIcon !== null) {
@@ -27,11 +35,14 @@ const PostBox = () => {
         <div className="text-white">Profile</div>
         <div className="w-full">
           <div className="py-auto w-full">
-            {/* <textarea
-              placeholder="What is happening?!"
-              className="placeholder-unhighlighted-color placeholder:py-auto h-full w-full resize-none bg-dark px-4 py-2 text-xl leading-5 text-white outline-none"
-            ></textarea> */}
-            <Polls />
+            {showPolls ? (
+              <Polls setShowPolls={setShowPolls} />
+            ) : (
+              <textarea
+                placeholder="What is happening?!"
+                className="placeholder-unhighlighted-color placeholder:py-auto h-full w-full resize-none bg-dark px-4 py-2 text-xl leading-5 text-white outline-none"
+              ></textarea>
+            )}
           </div>
           <div className="flex items-center justify-between gap-2" id="iconBox">
             <div className="flex w-full items-center justify-start gap-2">
@@ -62,19 +73,33 @@ const PostBox = () => {
                   icon={<GIFIcon color="#2887d0" />}
                 />
               </div>
-              <div className="hover:bg-commentHoverBg rounded-full p-2">
+              <div
+                onClick={() => setShowPolls(true)}
+                className="hover:bg-commentHoverBg rounded-full p-2"
+              >
                 <ActionIcon
                   iconText="Poll"
                   sizeStyles="w-[20px] h-[20px]"
                   icon={<PollIcon color="#2887d0" />}
                 />
               </div>
-              <div className="hover:bg-commentHoverBg rounded-full p-2">
+              <div
+                onClick={toggleEmojiPicker}
+                className="hover:bg-commentHoverBg relative rounded-full p-2"
+              >
                 <ActionIcon
                   iconText="Emoji"
                   sizeStyles="w-[20px] h-[20px]"
                   icon={<EmojiIcon color="#2887d0" />}
                 />
+                {showEmojiPicker && (
+                  <div className="absolute z-10">
+                    <EmojiPicker
+                      theme={Theme.DARK}
+                      emojiStyle={EmojiStyle.TWITTER}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex w-[100px] items-center justify-center">
