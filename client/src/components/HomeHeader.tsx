@@ -13,12 +13,12 @@ const HomeHeader = (props: HeaderProps) => {
     <div className="flex h-full w-full items-center justify-between dark:bg-dark">
       <div
         onClick={() => props.setTabIndex(0)}
-        className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
+        className="flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg text-unhighlighted-color hover:bg-accent-dark"
       >
         <div
           className={`flex h-full items-center ${
             props.tabIndex === 0 &&
-            "border-header border-b-4 font-medium text-white"
+            "border-b-4 border-header font-medium text-white"
           }`}
         >
           For you
@@ -26,12 +26,12 @@ const HomeHeader = (props: HeaderProps) => {
       </div>
       <div
         onClick={() => props.setTabIndex(1)}
-        className="text-unhighlighted-color flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg hover:bg-accent-dark"
+        className="flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg text-unhighlighted-color hover:bg-accent-dark"
       >
         <div
           className={`flex h-full items-center ${
             props.tabIndex === 1 &&
-            "border-header border-b-4 font-medium text-white"
+            "border-b-4 border-header font-medium text-white"
           }`}
         >
           Following
@@ -53,7 +53,7 @@ const HomeHeader = (props: HeaderProps) => {
       <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
         <div className="flex items-center justify-between ">
           <div className="h-[25px] w-[25px]">
-            <SettingsIcon color="white" />
+            <SettingsIcon color="text-white" />
           </div>
           <div className="absolute left-1/2 top-full z-10 hidden w-full -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden">
             Timeline Settings{" "}

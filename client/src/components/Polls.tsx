@@ -26,15 +26,13 @@ const Polls = (props: PollsPropType) => {
   };
   return (
     <div>
-      <textarea
-        className="placeholder-unhighlighted-color placeholder:py-auto h-full w-full resize-none bg-dark px-4 py-2 text-xl leading-5 text-white outline-none"
-        name=""
-        id=""
-        placeholder="Ask a question"
-      ></textarea>
+      <input
+        placeholder="Ask a question?!"
+        className="placeholder:py-auto w-full bg-dark py-2 text-xl leading-5 text-white placeholder-unhighlighted-color outline-none"
+      />
       <div className="py-2">
-        <div className=" border-borderColor rounded-t-lg border py-2 text-white">
-          <div className="border-borderColor flex w-full gap-4 border-b-2 px-2">
+        <div className=" rounded-t-lg border border-borderColor py-2 text-white">
+          <div className="flex w-full gap-4 border-b-2 border-borderColor px-2">
             <div className="w-full">
               {new Array(showOptions).fill("").map((_, index) => (
                 <InputBox
@@ -53,7 +51,7 @@ const Polls = (props: PollsPropType) => {
               <div className="flex items-end">
                 <button
                   onClick={addPollOption}
-                  className="text-commentHoverText text-2xl"
+                  className="text-2xl text-commentHoverText"
                 >
                   +
                 </button>
@@ -83,7 +81,7 @@ const Polls = (props: PollsPropType) => {
             </div>
           </div>
         </div>
-        <div className=" border-borderColor flex w-full items-center justify-center rounded-b-lg border">
+        <div className=" flex w-full items-center justify-center rounded-b-lg border border-borderColor">
           <button
             onClick={() => props.setShowPolls(false)}
             className="w-full rounded-b-lg py-4 text-[#c1292d] hover:bg-[#1c0404]"
