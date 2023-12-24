@@ -13,53 +13,53 @@ const Post = (props: PostProps) => {
   console.log(props);
   const [styles, setStyles] = useState<ObjectType[] | null>(null);
 
-  const imageStyles: ObjectType[][] = [
-    [{ div: "rounded-lg", image: "rounded-lg w-full" }],
-    [
-      {
-        div: "rounded-l-lg",
-        image: "border-r border-borderColor rounded-l-lg",
-      },
-      {
-        div: "rounded-r-lg",
-        image: "border-l border-borderColor rounded-r-lg",
-      },
-    ],
-    [
-      {
-        div: "rounded-tl-lg",
-        image: "border-r border-b border-borderColor rounded-tl-lg",
-      },
-      {
-        div: "rounded-tr-lg",
-        image: "border-l border-b border-borderColor rounded-tr-lg",
-      },
-      {
-        div: "rounded-bl-lg",
-        image: "border-t border-r border-borderColor rounded-bl-lg",
-      },
-    ],
-    [
-      {
-        div: "rounded-tl-lg",
-        image: "border-r border-b border-borderColor rounded-tl-lg",
-      },
-      {
-        div: "rounded-tr-lg",
-        image: "border-l border-b border-borderColor rounded-tr-lg",
-      },
-      {
-        div: "rounded-bl-lg",
-        image: "border-t border-r border-borderColor rounded-bl-lg",
-      },
-      {
-        div: "rounded-br-lg",
-        image: "border-t border-l border-borderColor rounded-br-lg",
-      },
-    ],
-  ];
-
   useEffect(() => {
+    const imageStyles: ObjectType[][] = [
+      [{ div: "rounded-lg", image: "rounded-lg w-full" }],
+      [
+        {
+          div: "rounded-l-lg",
+          image: "border-r border-borderColor rounded-l-lg",
+        },
+        {
+          div: "rounded-r-lg",
+          image: "border-l border-borderColor rounded-r-lg",
+        },
+      ],
+      [
+        {
+          div: "rounded-tl-lg",
+          image: "border-r border-b border-borderColor rounded-tl-lg",
+        },
+        {
+          div: "rounded-tr-lg",
+          image: "border-l border-b border-borderColor rounded-tr-lg",
+        },
+        {
+          div: "rounded-bl-lg",
+          image: "border-t border-r border-borderColor rounded-bl-lg",
+        },
+      ],
+      [
+        {
+          div: "rounded-tl-lg",
+          image: "border-r border-b border-borderColor rounded-tl-lg",
+        },
+        {
+          div: "rounded-tr-lg",
+          image: "border-l border-b border-borderColor rounded-tr-lg",
+        },
+        {
+          div: "rounded-bl-lg",
+          image: "border-t border-r border-borderColor rounded-bl-lg",
+        },
+        {
+          div: "rounded-br-lg",
+          image: "border-t border-l border-borderColor rounded-br-lg",
+        },
+      ],
+    ];
+
     const styleIndex = props.images ? props.images.length - 1 : 0;
     setStyles(imageStyles[styleIndex]);
   }, [props]);
