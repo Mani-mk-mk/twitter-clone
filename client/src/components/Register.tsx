@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AppleIcon from "../assets/icons/AppleIcon";
 import GoogleIcon from "../assets/icons/GoogleIcon";
 import Logo from "../assets/icons/Logo";
@@ -87,10 +88,12 @@ const Register = (_props: Props) => {
               <p className="py-4 text-start text-lg font-bold">
                 Already have an account?
               </p>
-              <Buttons
-                text="Sign in"
-                additionalStyles=" bg-[black] text-blue-400 border-[0.25px] border-slate-100"
-              />
+              <Link to="/home">
+                <Buttons
+                  text="Sign in"
+                  additionalStyles=" bg-[black] text-blue-400 border-[0.25px] border-slate-100"
+                />
+              </Link>
             </div>
           </div>
         </div>

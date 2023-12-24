@@ -9,11 +9,18 @@ import Tabs from "../components/Tabs";
 import LocationIcon from "../assets/icons/LocationIcon";
 import AttachmentIcon from "../assets/icons/AttachmentIcon";
 import CalendarIcon from "../assets/icons/CalendarIcon";
+// interface GenericPropType {
+//   mainElementRef: React.MutableRefObject<HTMLDivElement | null>;
+// }
 
 const UserProfile = () => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const [profileTabIndex, setProfileTabIndex] = useState(0);
+
   return (
-    <div>
+    <main
+      // ref={mainElementRef}
+      className="max-w-[600px] border-r border-borderColor lg:w-full"
+    >
       <div></div>
       <div className="w-full">
         <img src={Banner} alt="BannerImage" />
@@ -28,7 +35,6 @@ const UserProfile = () => {
           />
         </div>
         <div className="flex w-full items-center justify-end gap-4 ">
-          {/* <div className="flex items-center gap-4"> */}
           <div className="text-white">
             <ActionIcon
               icon={<MorePostIcon />}
@@ -112,13 +118,13 @@ const UserProfile = () => {
       </div>
       <div>
         <Tabs
-          tabIndex={tabIndex}
-          setTabIndex={setTabIndex}
+          tabIndex={profileTabIndex}
+          setTabIndex={setProfileTabIndex}
           components={["Posts", "Replies", "Subs", "Highlights", "Media"]}
         />
       </div>
       {/* </div> */}
-    </div>
+    </main>
   );
 };
 
