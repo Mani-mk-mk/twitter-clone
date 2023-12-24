@@ -7,7 +7,7 @@ import Home from "./pages/Home.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Router basename="twitter-clone/#">
+    <Router>
       <Routes>
         <Route
           path="/"
