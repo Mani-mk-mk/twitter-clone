@@ -16,6 +16,8 @@ export default {
         dropdownHoverBg: "#84c0f2",
         commentHoverBg: "#050f18",
         modalBackdrop: "rgba(91, 112, 131, 0.4)",
+        retweetHoverBg: '#071a14',
+        likeHoverBg: '#200914'
       },
       fontFamily: {
         roboto: "'Roboto', sans-serif",
@@ -29,6 +31,8 @@ export default {
         commentHoverText: "#2887d0",
         white: "white",
         black: "black",
+        retweetHoverText: '#00ba7c',
+        likeHoverText: '#de1672'
       },
     },
   },

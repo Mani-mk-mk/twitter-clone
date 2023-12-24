@@ -30,7 +30,7 @@ const PostBox = () => {
   };
 
   return (
-    <div className="dark:bg-black w-full p-4" id="postbox-container">
+    <div className="w-full p-4 dark:bg-black" id="postbox-container">
       <div className="flex items-center gap-4">
         <div className="text-white">Profile</div>
         <div className="w-full">
@@ -38,22 +38,22 @@ const PostBox = () => {
             {showPolls ? (
               <Polls setShowPolls={setShowPolls} />
             ) : (
-              <textarea
+              <input
                 placeholder="What is happening?!"
-                className="placeholder-unhighlighted-color placeholder:py-auto h-full w-full resize-none bg-dark px-4 py-2 text-xl leading-5 text-white outline-none"
-              ></textarea>
+                className="placeholder:py-auto w-full bg-dark py-2 text-xl leading-5 text-white placeholder-unhighlighted-color outline-none"
+              />
             )}
           </div>
           <div className="flex items-center justify-between gap-2" id="iconBox">
             <div className="flex w-full items-center justify-start gap-2">
               <div
-                className="hover:bg-commentHoverBg rounded-full p-2"
+                className="rounded-full p-2 hover:bg-commentHoverBg"
                 onClick={handleActionIconClick}
               >
                 <ActionIcon
                   iconText="Media"
                   sizeStyles="w-[20px] h-[20px]"
-                  icon={<MediaIcon color="#2887d0" />}
+                  icon={<MediaIcon color="text-commentHoverText" />}
                 />
                 <div className="hidden">
                   <input
@@ -66,31 +66,31 @@ const PostBox = () => {
                   />
                 </div>
               </div>
-              <div className="hover:bg-commentHoverBg rounded-full p-2">
+              <div className="rounded-full p-2 hover:bg-commentHoverBg">
                 <ActionIcon
                   iconText="GIF"
                   sizeStyles="w-[20px] h-[20px]"
-                  icon={<GIFIcon color="#2887d0" />}
+                  icon={<GIFIcon color="text-commentHoverText" />}
                 />
               </div>
               <div
                 onClick={() => setShowPolls(true)}
-                className="hover:bg-commentHoverBg rounded-full p-2"
+                className="rounded-full p-2 hover:bg-commentHoverBg"
               >
                 <ActionIcon
                   iconText="Poll"
                   sizeStyles="w-[20px] h-[20px]"
-                  icon={<PollIcon color="#2887d0" />}
+                  icon={<PollIcon color="text-commentHoverText" />}
                 />
               </div>
               <div
                 onClick={toggleEmojiPicker}
-                className="hover:bg-commentHoverBg relative rounded-full p-2"
+                className="relative rounded-full p-2 hover:bg-commentHoverBg"
               >
                 <ActionIcon
                   iconText="Emoji"
                   sizeStyles="w-[20px] h-[20px]"
-                  icon={<EmojiIcon color="#2887d0" />}
+                  icon={<EmojiIcon color="text-commentHoverText" />}
                 />
                 {showEmojiPicker && (
                   <div className="absolute z-10">

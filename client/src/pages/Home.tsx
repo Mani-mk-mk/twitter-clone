@@ -5,12 +5,15 @@ import posts from "../data/post";
 import Post from "../components/Post";
 import PostBox from "../components/PostBox";
 import PremiumModal from "../components/PremiumModal";
+import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   const navElementRef = useRef<HTMLDivElement | null>(null);
   const mainElementRef = useRef<HTMLDivElement | null>(null);
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [tabIndex, setTabIndex] = useState<number>(0);
+
+  const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,19 +35,19 @@ const Home = () => {
   }, [windowWidth]);
 
   return (
-    <div data-mode="dark" className="flex dark:bg-[black]">
-      <PremiumModal />
+    <div data-mode="dark" className="flex dark:bg-[black] lg:justify-center">
+      <PremiumModal modalRef={modalRef} />
 
       <div className="relative">
-        <nav ref={navElementRef} className="border-borderColor fixed border-r">
-          <Sidebar />
+        <nav ref={navElementRef} className="fixed border-r border-borderColor">
+          <Sidebar modalRef={modalRef} />
         </nav>
       </div>
       <main
         ref={mainElementRef}
-        className="border-borderColor max-w-[600px] border-r lg:w-full"
+        className="max-w-[600px] border-r border-borderColor lg:w-full"
       >
-        <div className=" border-borderColor relative h-[60px] border border-r-0 border-t-0 border-solid">
+        <div className=" relative h-[60px] border border-r-0 border-t-0 border-solid border-borderColor">
           <HomeHeader tabIndex={tabIndex} setTabIndex={setTabIndex} />
         </div>
         <div>
@@ -54,6 +57,28 @@ const Home = () => {
           <Post {...post} key={key} />
         ))}
       </main>
+      <div className="mx-4 hidden text-white lg:block lg:max-w-[350px]">
+        <div className="flex h-[60px] w-full items-center">
+          <div className="py-auto mb-2  w-full items-center ">
+            <SearchBar />
+          </div>
+        </div>
+        <div className="flex flex-col items-start gap-3 rounded-xl bg-accent-dark p-4">
+          <h2 className="font-roboto text-xl font-extrabold">
+            Subscribe to Premium
+          </h2>
+          <p>
+            Subscribe to unlock new features and if eligible, receive a share of
+            ads revenue.
+          </p>
+          <button
+            className="rounded-full bg-btn-dark px-4 py-2 font-bold"
+            onClick={() => modalRef.current?.showModal()}
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

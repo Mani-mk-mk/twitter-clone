@@ -2,12 +2,12 @@ import { IconPropTypes } from "../../types/IconPropTypes";
 
 const GoogleIcon = (props: IconPropTypes) => {
   return (
-    <div>
+    <div className={props.color}>
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 48 48"
-        fill={props.color}
+        fill="currentColor"
       >
         <g>
           <path

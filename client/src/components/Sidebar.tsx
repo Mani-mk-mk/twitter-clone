@@ -10,14 +10,22 @@ import NotificationIcon from "../assets/icons/NotificationIcon";
 import PostIcon from "../assets/icons/PostIcon";
 import ProfileIcon from "../assets/icons/ProfileIcon";
 
-const Sidebar = () => {
+interface SidebarPropTypes {
+  modalRef: React.MutableRefObject<HTMLDialogElement | null>;
+}
+
+const Sidebar = (props: SidebarPropTypes) => {
+  const showModal = () => {
+    props.modalRef?.current?.showModal();
+  };
+
   return (
     <div className="h-flex w-full flex-col items-center gap-2 px-2 lg:w-[300px] lg:items-start lg:px-0">
       <div className="flex flex-col items-center gap-2 lg:items-start lg:px-[25px]">
         <div className="flex h-[60px] w-[60px] items-center justify-center lg:ms-3 lg:justify-start">
           <div className="w-1/2">
             <a href="/">
-              <Logo color="white" />
+              <Logo color="text-white" />
             </a>
           </div>
         </div>
@@ -25,7 +33,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <HomeIcon color="white" />
+                <HomeIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Home
@@ -36,7 +44,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <ExploreIcon color="white" />
+                <ExploreIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Explore
@@ -50,7 +58,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <NotificationIcon color="white" />
+                <NotificationIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Notifications
@@ -64,7 +72,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <MessageIcon color="white" />
+                <MessageIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Messages
@@ -78,7 +86,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <GrokIcon color="white" />
+                <GrokIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Grok
@@ -90,7 +98,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <ListIcon color="white" />
+                <ListIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Lists
@@ -102,7 +110,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <CommunitiesIcon color="white" />
+                <CommunitiesIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Communities
@@ -113,10 +121,13 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
+          <div
+            onClick={showModal}
+            className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start"
+          >
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <Logo color="white" />
+                <Logo color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Premium
@@ -130,7 +141,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <ProfileIcon color="white" />
+                <ProfileIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 Profile
@@ -144,7 +155,7 @@ const Sidebar = () => {
           <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
             <div className="flex items-center justify-center ">
               <div className="h-[30px] w-[30px]">
-                <MoreIcon color="white" />
+                <MoreIcon color="text-white" />
               </div>
               <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
                 More
@@ -157,7 +168,7 @@ const Sidebar = () => {
         <div className="group relative flex cursor-pointer items-center justify-center gap-4 p-3 hover:rounded-full hover:bg-accent-dark lg:justify-start">
           <div className="flex items-center justify-center lg:hidden ">
             <button className="h-[50px] w-[50px] rounded-full bg-btn-dark p-3">
-              <PostIcon color="white" />
+              <PostIcon color="text-white" />
             </button>
             <div className="absolute left-1/2 top-full z-10 hidden -translate-x-1/2 transform rounded bg-hover-bg-highlight p-1 text-xs text-white group-hover:block lg:hidden lg:group-hover:hidden">
               Post

@@ -65,7 +65,7 @@ const Post = (props: PostProps) => {
   }, [props]);
 
   return (
-    <div className="border-borderColor border-y p-4 text-white hover:bg-hover-dark">
+    <div className="cursor-pointer border-y border-borderColor p-4 text-white hover:bg-hover-dark">
       <div className="flex w-full items-start gap-4">
         <div className="h-[40px] w-[40px] rounded-full ">
           <img
@@ -122,20 +122,20 @@ const Post = (props: PostProps) => {
                 sizeStyles="h-[20px] w-[20px]"
                 icon={<CommentIcon color="#2887d0" />}
                 iconText="Comments"
-                additionalStyles="hover:bg-commentHoverBg p-2"
+                additionalStyles="hover:bg-commentHoverBg group-hover:text-commentHoverText hover:text-commentHoverText text-unhighlighted-color p-2"
               />
-              <p className="group-hover:text-commentHoverText text-unhighlighted-color text-sm">
+              <p className="text-sm text-unhighlighted-color group-hover:text-commentHoverText">
                 {props.stats.comments}
               </p>
             </div>
             <div className="group flex items-center">
               <ActionIcon
                 sizeStyles="h-[20px] w-[20px]"
-                icon={<RetweetIcon color="#2887d0" />}
+                icon={<RetweetIcon color="#00ba7c" />}
                 iconText="Retweet"
-                additionalStyles="hover:bg-commentHoverBg p-2"
+                additionalStyles="text-unhighlighted-color group-hover:text-retweetHoverText hover:text-retweetHoverText hover:bg-retweetHoverBg p-2"
               />
-              <p className="group-hover:text-commentHoverText text-unhighlighted-color text-sm">
+              <p className="group-hover:text-retweetHoverText text-sm text-unhighlighted-color">
                 {props.stats.retweets}
               </p>
             </div>
@@ -143,11 +143,11 @@ const Post = (props: PostProps) => {
             <div className="group flex items-center">
               <ActionIcon
                 sizeStyles="h-[20px] w-[20px]"
-                icon={<LikeIcon color="#2887d0" />}
+                icon={<LikeIcon color="#de1672" />}
                 iconText="Likes"
-                additionalStyles="hover:bg-commentHoverBg p-2"
+                additionalStyles="text-unhighlighted-color hover:text-likeHoverText group-hover:text-likeHoverText hover:bg-likeHoverBg p-2"
               />
-              <p className="group-hover:text-commentHoverText text-unhighlighted-color text-sm">
+              <p className="group-hover:text-likeHoverText text-sm text-unhighlighted-color">
                 {props.stats.likeCount}
               </p>
             </div>
@@ -157,9 +157,9 @@ const Post = (props: PostProps) => {
                 sizeStyles="h-[20px] w-[20px]"
                 icon={<ViewsIcon color="#2887d0" />}
                 iconText="Views"
-                additionalStyles="hover:bg-commentHoverBg p-2"
+                additionalStyles="text-unhighlighted-color group-hover:text-commentHoverText hover:text-commentHoverText hover:bg-commentHoverBg p-2"
               />
-              <p className="group-hover:text-commentHoverText text-unhighlighted-color text-sm">
+              <p className="text-sm text-unhighlighted-color group-hover:text-commentHoverText">
                 {props.stats.views}
               </p>
             </div>
@@ -173,7 +173,7 @@ const Post = (props: PostProps) => {
                   sizeStyles="h-[20px] w-[20px]"
                   icon={<BookmarkIcon color="#2887d0" />}
                   iconText="Bookmarks"
-                  additionalStyles="hover:bg-commentHoverBg p-2"
+                  additionalStyles="text-unhighlighted-color hover:text-commentHoverText hover:bg-commentHoverBg p-2"
                 />
               </div>
 
@@ -182,7 +182,7 @@ const Post = (props: PostProps) => {
                   sizeStyles="h-[20px] w-[20px]"
                   icon={<ShareIcon color="#2887d0" />}
                   iconText="Share"
-                  additionalStyles="hover:bg-commentHoverBg p-2"
+                  additionalStyles="text-unhighlighted-color hover:text-commentHoverText hover:bg-commentHoverBg p-2"
                 />
               </div>
             </div>

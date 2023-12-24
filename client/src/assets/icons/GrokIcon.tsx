@@ -2,8 +2,8 @@ import { IconPropTypes } from "../../types/IconPropTypes";
 
 const GrokIcon = (props: IconPropTypes) => {
   return (
-    <div>
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill={props.color}>
+    <div className={props.color}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
         <g>
           <g clip-path="url(#0-clip0_2592_269)" clip-rule="evenodd">
             <path d="M4.2 4.2v15.6h15.6V4.2H4.2zM3 2h18c.552 0 1 .448 1 1v18c0 .552-.448 1-1 1H3c-.552 0-1-.448-1-1V3c0-.552.448-1 1-1z"></path>

@@ -2,9 +2,9 @@ import { IconPropTypes } from "../../types/IconPropTypes";
 
 const PollIcon = (props: IconPropTypes) => {
   return (
-    <div>
+    <div className={props.color}>
       <svg
-        fill={props.color}
+        fill="currentColor"
         viewBox="0 0 24 24"
         aria-hidden="true"
         color={props.color}
