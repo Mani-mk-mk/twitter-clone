@@ -13,7 +13,7 @@ const Register = (_props: Props) => {
         <div className="mx-auto flex flex-col p-8 lg:w-full lg:flex-row lg:gap-8">
           <div className="my-4 w-[50px] lg:my-auto lg:w-[55%]">
             <div className="mx-auto w-full lg:w-[350px]">
-              <Logo color="white" />
+              <Logo color="text-white" />
             </div>
           </div>
           <div className=" dark:text-white lg:w-[45%]">
