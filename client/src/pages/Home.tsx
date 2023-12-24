@@ -6,7 +6,7 @@ import Post from "../components/Post";
 import PostBox from "../components/PostBox";
 import PremiumModal from "../components/PremiumModal";
 import SearchBar from "../components/SearchBar";
-import UserProfile from "./UserProfile";
+// import UserProfile from "./UserProfile";
 
 const Home = () => {
   const navElementRef = useRef<HTMLDivElement | null>(null);
@@ -48,7 +48,7 @@ const Home = () => {
         ref={mainElementRef}
         className="max-w-[600px] border-r border-borderColor lg:w-full"
       >
-        {/* <div className=" relative h-[60px] border border-r-0 border-t-0 border-solid border-borderColor">
+        <div className=" relative h-[60px] border border-r-0 border-t-0 border-solid border-borderColor">
           <HomeHeader tabIndex={tabIndex} setTabIndex={setTabIndex} />
         </div>
         <div>
@@ -56,8 +56,8 @@ const Home = () => {
         </div>
         {posts.map((post, key) => (
           <Post {...post} key={key} />
-        ))} */}
-        <UserProfile />
+        ))}
+        {/* <UserProfile /> */}
       </main>
       <div className="mx-4 hidden text-white lg:block lg:max-w-[350px]">
         <div className="flex h-[60px] w-full items-center">
