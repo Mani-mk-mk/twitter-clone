@@ -13,7 +13,7 @@ const HomeHeader = (props: HeaderProps) => {
   const headerComponents = [
     <div className="flex h-full w-full items-center justify-between dark:bg-dark">
       <div
-        // onClick={() => props.setTabIndex(0)}
+        // onClic k={() => props.setTabIndex(0)}
         className="flex h-full w-full cursor-pointer items-center justify-center px-3 text-lg text-unhighlighted-color hover:bg-accent-dark"
       >
         <div
