@@ -40,7 +40,7 @@ const UserProfile = () => {
               icon={<MorePostIcon />}
               iconText="More"
               additionalStyles="p-2 border-white border rounded-full"
-              sizeStyles="w-[25px] h-[25px]"
+              sizeStyles="w-[15px] h-[15px] md:w-[25px] md:h-[25px]"
             />
           </div>
           <div className="text-white">
@@ -48,7 +48,7 @@ const UserProfile = () => {
               icon={<MessageIcon />}
               iconText="Messages"
               additionalStyles="p-2 border-white border rounded-full"
-              sizeStyles="w-[25px] h-[25px]"
+              sizeStyles="w-[15px] h-[15px] md:w-[25px] md:h-[25px]"
             />
           </div>
           <div>
@@ -56,11 +56,11 @@ const UserProfile = () => {
               icon={<SubscribeIcon color="text-subscribeBtnColor" />}
               iconText="Subscribe"
               additionalStyles="p-2 border border-subscribeBtnColor rounded-full"
-              sizeStyles="w-[25px] h-[25px]"
+              sizeStyles="w-[15px] h-[15px] md:w-[25px] md:h-[25px]"
             />
           </div>
           <div>
-            <button className="rounded-full px-4 py-2 font-roboto font-bold dark:bg-white dark:text-black">
+            <button className="rounded-full px-2 py-2 font-roboto font-bold dark:bg-white dark:text-black md:px-4">
               Follow
             </button>
           </div>
@@ -75,7 +75,7 @@ const UserProfile = () => {
             hate me, I find happiness through the hate. For Collaborations - DM
           </p>
         </div>
-        <div className="flex items-center justify-between py-2 text-unhighlighted-color">
+        <div className="flex flex-col items-start justify-between py-2 text-unhighlighted-color md:flex-row md:items-center">
           <div className="flex items-center gap-2">
             <div className="h-[20px] w-[20px]">
               <LocationIcon color="text-unhighlighted-color" />
