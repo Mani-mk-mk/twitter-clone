@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./index.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, HashRouter as Router } from "react-router-dom";
 import Register from "./components/Register.tsx";
 import Home from "./pages/Home.tsx";
 import UserProfile from "./pages/UserProfile.tsx";
@@ -43,89 +43,91 @@ function App() {
   //   }
   // }, [windowWidth]);
 
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <React.StrictMode>
       {/* <Router> */}
       <div data-mode="dark" className="flex dark:bg-[black] lg:justify-center">
         <PremiumModal modalRef={modalRef} />
-        {location.pathname !== "/" && (
-          <div>
-            <nav
-              // ref={navElementRef}
-              className="fixed border-r border-borderColor"
-            >
-              <Sidebar
-                navIndex={navIndex}
-                setNavIndex={setNavIndex}
-                modalRef={modalRef}
-              />
-            </nav>
-          </div>
-        )}
+        {/* {location.pathname !== "/" && ( */}
+        <div>
+          <nav
+            // ref={navElementRef}
+            className="fixed border-r border-borderColor"
+          >
+            <Sidebar
+              navIndex={navIndex}
+              setNavIndex={setNavIndex}
+              modalRef={modalRef}
+            />
+          </nav>
+        </div>
+        ){/* } */}
+        <Router>
+          <Routes>
+            {/* <React.Fragment> */}
 
-        <Routes>
-          {/* <React.Fragment> */}
-
-          <Route
-            path="/home"
-            element={
-              <div
-                className="ml-[90px] lg:ml-[300px]"
-                // style={{ marginLeft: `${mainElementMargin}px` }}
-                data-mode="dark"
-              >
-                <Home tabIndex={navIndex} />
-              </div>
-            }
-          />
-          <Route
-            path="/notifications"
-            element={
-              <div
-                className="ml-[90px] lg:ml-[300px]"
-                // style={{ marginLeft: `${mainElementMargin}px` }}
-                data-mode="dark"
-              >
-                <Notifications tabIndex={navIndex} />
-              </div>
-            }
-          />
-          <Route
-            path="/bookmarks"
-            element={
-              <div
-                className="ml-[90px] lg:ml-[300px]"
-                // style={{ marginLeft: `${mainElementMargin}px` }}
-                data-mode="dark"
-              >
-                <Bookmarks tabIndex={navIndex} />
-              </div>
-            }
-          />
-          <Route
-            path="/user-profile"
-            element={
-              <div
-                className="ml-[90px] lg:ml-[300px]"
-                // style={{ marginLeft: `${mainElementMargin}px` }}
-                data-mode="dark"
-              >
-                <UserProfile />
-              </div>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <div data-mode="dark">
-                <Register />
-              </div>
-            }
-          />
-        </Routes>
-        {location.pathname !== "/" && <RighBar modalRef={modalRef} />}
+            <Route
+              path="/home"
+              element={
+                <div
+                  className="ml-[90px] lg:ml-[300px]"
+                  // style={{ marginLeft: `${mainElementMargin}px` }}
+                  data-mode="dark"
+                >
+                  <Home tabIndex={navIndex} />
+                </div>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <div
+                  className="ml-[90px] lg:ml-[300px]"
+                  // style={{ marginLeft: `${mainElementMargin}px` }}
+                  data-mode="dark"
+                >
+                  <Notifications tabIndex={navIndex} />
+                </div>
+              }
+            />
+            <Route
+              path="/bookmarks"
+              element={
+                <div
+                  className="ml-[90px] lg:ml-[300px]"
+                  // style={{ marginLeft: `${mainElementMargin}px` }}
+                  data-mode="dark"
+                >
+                  <Bookmarks tabIndex={navIndex} />
+                </div>
+              }
+            />
+            <Route
+              path="/user-profile"
+              element={
+                <div
+                  className="ml-[90px] lg:ml-[300px]"
+                  // style={{ marginLeft: `${mainElementMargin}px` }}
+                  data-mode="dark"
+                >
+                  <UserProfile />
+                </div>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <div data-mode="dark">
+                  <Register />
+                </div>
+              }
+            />
+          </Routes>
+        </Router>
+        {/* {location.pathname !== "/" && <RighBar modalRef={modalRef} />} */}
+        <RighBar modalRef={modalRef} />
       </div>
       {/* </Router> */}
     </React.StrictMode>
