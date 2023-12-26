@@ -105,7 +105,7 @@ function App() {
             }
           />
           <Route
-            path="/user-profile"
+            path="/:userName"
             element={
               <div
                 className="ml-[90px] lg:ml-[300px]"

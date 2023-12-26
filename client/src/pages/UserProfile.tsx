@@ -1,6 +1,5 @@
 // import HomeHeader from "../components/HomeHeader";
-import { useState } from "react";
-import Banner from "../assets/background-banner-plan.png";
+import { useEffect, useState } from "react";
 import MessageIcon from "../assets/icons/MessageIcon";
 import MorePostIcon from "../assets/icons/MorePostIcon";
 import SubscribeIcon from "../assets/icons/SubscribeIcon";
@@ -9,12 +8,47 @@ import Tabs from "../components/Tabs";
 import LocationIcon from "../assets/icons/LocationIcon";
 import AttachmentIcon from "../assets/icons/AttachmentIcon";
 import CalendarIcon from "../assets/icons/CalendarIcon";
+import { useParams } from "react-router-dom";
+import axiosInstance from "../utils/axios";
+import { PostsByUserDataType, ProfileDataType } from "../types/PostTypes";
+import Post from "../components/Post";
 // interface GenericPropType {
 //   mainElementRef: React.MutableRefObject<HTMLDivElement | null>;
 // }
 
 const UserProfile = () => {
   const [profileTabIndex, setProfileTabIndex] = useState(0);
+  const [profileData, setProfileData] = useState<ProfileDataType | null>(null);
+  const [postsByUser, setPostsByUser] = useState<PostsByUserDataType | null>(
+    null,
+  );
+
+  const { userName } = useParams();
+
+  console.log(userName);
+
+  useEffect(() => {
+    const getProfile = async () => {
+      const response = await axiosInstance.get("/users/?userName=@" + userName);
+      if (response.status === 200) {
+        // console.log(response.data);
+        setProfileData(response.data[0]);
+      }
+    };
+    getProfile();
+
+    const getPostsMadeByUser = async () => {
+      const response = await axiosInstance.get(
+        `users?userName=@${userName}&_embed=posts`,
+      );
+      if (response.status === 200) {
+        // console.log(response.data);
+        setPostsByUser(response.data[0]);
+      }
+    };
+
+    if (profileTabIndex === 0) getPostsMadeByUser();
+  }, [profileTabIndex, userName]);
 
   return (
     <main
@@ -23,14 +57,14 @@ const UserProfile = () => {
     >
       <div></div>
       <div className="w-full">
-        <img src={Banner} alt="BannerImage" />
+        <img src={profileData?.bannerUri} alt="BannerImage" />
       </div>
 
       <div className="flex h-[75px] items-start justify-between p-4">
         <div className="relative h-[150px] w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-full ">
           <img
             className="absolute left-1/2 rounded-full border-4 border-black"
-            src="https://pbs.twimg.com/profile_images/1570500099373170688/VVVytBl2_400x400.jpg"
+            src={profileData?.profilePictureUri}
             alt="profile-image"
           />
         </div>
@@ -69,47 +103,53 @@ const UserProfile = () => {
       <div className="px-4 text-white">
         <h1 className="font-roboto text-2xl font-bold">Johns.</h1>
         <h4 className="text-unhighlighted-color">@CricCrazyJohns</h4>
-        <div className="py-2">
-          <p>
-            IPL, Mohanlal, Vijay, Cringe guy, Average in English, When people
-            hate me, I find happiness through the hate. For Collaborations - DM
-          </p>
-        </div>
+        {profileData?.bio && (
+          <div className="py-2">
+            <p>{profileData.bio}</p>
+          </div>
+        )}
         <div className="flex flex-col items-start justify-between py-2 text-unhighlighted-color md:flex-row md:items-center">
-          <div className="flex items-center gap-2">
-            <div className="h-[20px] w-[20px]">
-              <LocationIcon color="text-unhighlighted-color" />
+          {profileData?.location && (
+            <div className="flex items-center gap-2">
+              <div className="h-[20px] w-[20px]">
+                <LocationIcon color="text-unhighlighted-color" />
+              </div>
+              <p>{profileData.location}</p>
             </div>
-            <p>Kerala, India</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-[20px] w-[20px]">
-              <AttachmentIcon color="text-unhighlighted-color" />
+          )}{" "}
+          {profileData?.attachments && (
+            <div className="flex items-center gap-2">
+              <div className="h-[20px] w-[20px]">
+                <AttachmentIcon color="text-unhighlighted-color" />
+              </div>
+              <a
+                className="text-commentHoverText"
+                href={profileData.attachments}
+              >
+                {profileData?.attachments}
+              </a>
             </div>
-            <a className="text-commentHoverText" href="">
-              instagram.com/johns_benny_ccj
-            </a>
-          </div>
+          )}
           <div className="flex items-center gap-2">
             <div className="h-[20px] w-[20px]">
               <CalendarIcon color="text-unhighlighted-color" />
             </div>
-            <p>Joined June, 2016</p>
+            <p>{profileData?.joiningDate}</p>
           </div>
         </div>
         {/* Follower Details */}
         <div className="flex items-start gap-4 py-2 text-lg">
-          <div className="font-roboto font-bold">
-            569{" "}
-            <span className="font-normal tracking-wide text-unhighlighted-color">
-              Following
+          <div>
+            <span className="mr-4 font-roboto font-bold">
+              {profileData?.following.length}
             </span>
+            <span className="text-unhighlighted-color">Following</span>
           </div>
-          <div className="font-roboto font-bold">
-            479.9K{" "}
-            <span className="font-normal tracking-wide text-unhighlighted-color">
-              Followers
+          <div>
+            <span className="mr-4 font-roboto font-bold">
+              {profileData?.followers.length}
             </span>
+            <span className="text-unhighlighted-color">Followers</span>
           </div>
         </div>
         <div className="py-2 text-unhighlighted-color">
@@ -124,6 +164,13 @@ const UserProfile = () => {
         />
       </div>
       {/* </div> */}
+      {postsByUser?.posts.map((post, key) => {
+        if (!profileData) {
+          return;
+        }
+        post["user"] = profileData;
+        return <Post {...post} key={key} />;
+      })}
     </main>
   );
 };

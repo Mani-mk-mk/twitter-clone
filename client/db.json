@@ -1,21 +1,30 @@
 {
   "users": [
     {
+      "id": 0,
+      "userName": "@SaiyansRandom",
+      "profileName": "Super Saiyan",
+      "profilePictureUri": "ds"
+    },
+    {
       "id": 1,
       "userName": "@CricCrazyJohns",
+      "postId": [1, 5, 6],
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1570500099373170688/VVVytBl2_400x400.jpg",
       "profileName": "Johns.",
       "bannerUri": "https://pbs.twimg.com/profile_banners/743735095308099585/1702229397/600x200",
       "bio": "IPL, Mohanlal, Vijay, Cringe guy, Average in English, When people hate me, I find happiness through the hate. For Collaborations - DM",
-      "following": [],
-      "followers": [],
+      "following": [2, 3],
+      "followers": [2, 3],
       "location": "Kerala, India",
-      "joiningDate": "June 2016"
+      "joiningDate": "June 2016",
+      "attachments": "instagram.com/johns_benny_ccj"
     },
     {
       "id": 2,
       "userName": "@JJK_Mya",
       "profileName": "JJK (Mya)",
+      "postId": 2,
       "bannerUri": "https://pbs.twimg.com/profile_banners/1650898234867433476/1697475122/600x200",
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1650899539350679554/NBoN9Bcr_400x400.jpg",
       "following": [],
@@ -26,6 +35,7 @@
     {
       "id": 3,
       "userName": "@NarutoVibe",
+      "postId": [3, 4],
       "profileName": "Naruto 🍜",
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1155233536913203201/4WGRaO8C_400x400.jpg",
       "bannerUri": "https://pbs.twimg.com/profile_banners/2931675387/1608702213/600x200",
@@ -97,7 +107,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 5,
       "tweet": "",
       "userId": 1,
       "stats": {
@@ -111,7 +121,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 6,
       "tweet": "What would you ask if they came as Santa Claus to your home?\n Drop your Christmas wishes here✍️",
       "userId": 1,
       "stats": {
@@ -122,6 +132,21 @@
       },
       "images": [
         "https://pbs.twimg.com/media/GCMmwNfacAAKGQM?format=png&name=900x900"
+      ]
+    },
+    {
+      "id": 7,
+      "tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likeCount": "8K",
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360"
       ]
     }
   ]
