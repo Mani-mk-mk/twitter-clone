@@ -25,8 +25,6 @@ const UserProfile = () => {
 
   const { userName } = useParams();
 
-  console.log(userName);
-
   useEffect(() => {
     const getProfile = async () => {
       const response = await axiosInstance.get("/users/?userName=@" + userName);
@@ -49,6 +47,7 @@ const UserProfile = () => {
 
     if (profileTabIndex === 0) getPostsMadeByUser();
   }, [profileTabIndex, userName]);
+  console.log(profileData);
 
   return (
     <main
@@ -56,19 +55,23 @@ const UserProfile = () => {
       className="max-w-[600px] border-r border-borderColor lg:w-full"
     >
       <div></div>
-      <div className="w-full">
-        <img src={profileData?.bannerUri} alt="BannerImage" />
+      <div className="w-full object-cover">
+        <img
+          className="w-full"
+          src={profileData?.bannerUri}
+          alt="BannerImage"
+        />
       </div>
 
-      <div className="flex h-[75px] items-start justify-between p-4">
-        <div className="relative h-[150px] w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-full ">
+      <div className="flex h-[75px] items-start justify-between px-2 py-4 md:p-4">
+        <div className="relative h-[150px] w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover ">
           <img
-            className="absolute left-1/2 rounded-full border-4 border-black"
+            className="absolute left-1/2 h-[100px] w-[100px] rounded-full border-4 border-black "
             src={profileData?.profilePictureUri}
             alt="profile-image"
           />
         </div>
-        <div className="flex w-full items-center justify-end gap-4 ">
+        <div className="flex w-full max-w-[200px] items-center justify-end gap-4 md:max-w-full ">
           <div className="text-white">
             <ActionIcon
               icon={<MorePostIcon />}
@@ -101,8 +104,10 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="px-4 text-white">
-        <h1 className="font-roboto text-2xl font-bold">Johns.</h1>
-        <h4 className="text-unhighlighted-color">@CricCrazyJohns</h4>
+        <h1 className="font-roboto text-2xl font-bold">
+          {profileData?.profileName}
+        </h1>
+        <h4 className="text-unhighlighted-color">{profileData?.userName}</h4>
         {profileData?.bio && (
           <div className="py-2">
             <p>{profileData.bio}</p>
@@ -141,13 +146,13 @@ const UserProfile = () => {
         <div className="flex items-start gap-4 py-2 text-lg">
           <div>
             <span className="mr-4 font-roboto font-bold">
-              {profileData?.following.length}
+              {profileData?.following?.length}
             </span>
             <span className="text-unhighlighted-color">Following</span>
           </div>
           <div>
             <span className="mr-4 font-roboto font-bold">
-              {profileData?.followers.length}
+              {profileData?.followers?.length}
             </span>
             <span className="text-unhighlighted-color">Followers</span>
           </div>

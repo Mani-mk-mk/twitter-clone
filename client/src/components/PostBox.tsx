@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EmojiIcon from "../assets/icons/EmojiIcon";
 import GIFIcon from "../assets/icons/GIFIcon";
 import MediaIcon from "../assets/icons/MediaIcon";
@@ -6,6 +6,9 @@ import PollIcon from "../assets/icons/PollIcon";
 import ActionIcon from "./ActionIcon";
 import Polls from "./Polls";
 import EmojiPicker, { EmojiStyle, Theme } from "emoji-picker-react";
+import axiosInstance from "../utils/axios";
+import { PostType, StatsProps, User } from "../types/PostTypes";
+import { Link } from "react-router-dom";
 
 const PostBox = () => {
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,10 +21,29 @@ const PostBox = () => {
 
   const [showEmojiPicker, setShowEmojiPickers] = useState(false);
   const [showPolls, setShowPolls] = useState(false);
+  const [profileData, setProfileData] = useState<User | null>(null);
+  const [maximumPostId, setMaximumPostId] = useState(0);
 
   const toggleEmojiPicker = () => {
     setShowEmojiPickers((showEmojiPicker) => !showEmojiPicker);
   };
+
+  useEffect(() => {
+    const getUserDetail = async () => {
+      const response = await axiosInstance.get("users/0");
+      if (response.status === 200) {
+        setProfileData(response.data);
+      }
+    };
+    const getMaxPostId = async () => {
+      const response = await axiosInstance.get("/posts?_sort=id&_order=desc");
+      if (response.status === 200) {
+        setMaximumPostId(response.data[0].id);
+      }
+    };
+    getUserDetail();
+    getMaxPostId();
+  }, []);
 
   const handleActionIconClick = () => {
     if (fileIcon !== null) {
@@ -29,10 +51,46 @@ const PostBox = () => {
     }
   };
 
+  const [tweet, setTweet] = useState("");
+
+  const postTweet = async () => {
+    console.log("Trying to post tweet...");
+    const defaultStats: StatsProps = {
+      likeCount: 0,
+      comments: 0,
+      views: 0,
+      retweets: 0,
+    };
+
+    const data: PostType = {
+      id: maximumPostId + 1,
+      userId: 0,
+      user: profileData!,
+      tweet: tweet,
+      stats: defaultStats,
+    };
+    const response = await axiosInstance.post("/posts", data);
+    if (response.status === 201) {
+      setTweet("");
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTweet(e.target.value);
+  };
+
   return (
     <div className="w-full p-4 dark:bg-black" id="postbox-container">
       <div className="flex items-center gap-4">
-        <div className="text-white">Profile</div>
+        <div className="h-[40px] w-[40px] rounded-full ">
+          <Link to={`/${profileData?.userName.slice(1)}`}>
+            <img
+              className="h-full w-full rounded-full border border-white object-cover"
+              src={profileData?.profilePictureUri}
+              alt="user-profile-picture"
+            />
+          </Link>
+        </div>
         <div className="w-full">
           <div className="py-auto w-full">
             {showPolls ? (
@@ -40,7 +98,9 @@ const PostBox = () => {
             ) : (
               <input
                 placeholder="What is happening?!"
-                className="placeholder:py-auto w-full bg-dark py-2 text-xl leading-5 text-white placeholder-unhighlighted-color outline-none"
+                value={tweet}
+                onChange={handleInputChange}
+                className="placeholder:py-auto w-full bg-dark py-2 leading-5 text-white placeholder-unhighlighted-color outline-none md:text-xl"
               />
             )}
           </div>
@@ -93,8 +153,11 @@ const PostBox = () => {
                   icon={<EmojiIcon color="text-commentHoverText" />}
                 />
                 {showEmojiPicker && (
-                  <div className="absolute z-10">
+                  <div className="absolute -left-full top-0 z-10">
                     <EmojiPicker
+                      onEmojiClick={(e) =>
+                        setTweet((prevTweet) => prevTweet + e.emoji)
+                      }
                       theme={Theme.DARK}
                       emojiStyle={EmojiStyle.TWITTER}
                     />
@@ -103,7 +166,10 @@ const PostBox = () => {
               </div>
             </div>
             <div className="flex w-[100px] items-center justify-center">
-              <button className="w-full rounded-full bg-btn-dark px-4 py-1 text-lg text-white">
+              <button
+                onClick={postTweet}
+                className="w-full rounded-full bg-btn-dark px-4 py-1 text-lg text-white"
+              >
                 Post
               </button>
             </div>

@@ -8,7 +8,7 @@ const Notifications = (props: HeaderProps) => {
 
   const notificationComponents = [
     <h1>All notifications</h1>,
-    <div className="text-white">
+    <div className="my-8 text-white">
       <div className="flex flex-col items-center justify-center">
         <div>
           <img
@@ -38,7 +38,7 @@ const Notifications = (props: HeaderProps) => {
         </div>
       </div>
     </div>,
-    <div className="text-white">
+    <div className="my-8 text-white">
       <div className="flex items-center justify-center">
         <div className="max-w-[60%] text-start">
           <h1 className="py-2 font-roboto text-3xl font-bold">

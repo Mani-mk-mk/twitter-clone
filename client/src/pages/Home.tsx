@@ -23,7 +23,7 @@ const Home = (props: HeaderProps) => {
   return (
     <main
       // ref={mainElementRef}
-      className="max-w-[600px] border-r border-borderColor lg:w-full"
+      className="relative max-w-[600px] border-r border-borderColor lg:w-full"
     >
       <div className="relative h-[60px] border border-r-0 border-t-0 border-solid border-borderColor">
         <HomeHeader tabIndex={props.tabIndex} />

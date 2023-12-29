@@ -9,6 +9,7 @@ import Sidebar from "./components/Sidebar.tsx";
 import PremiumModal from "./components/PremiumModal.tsx";
 import Notifications from "./pages/Notifications.tsx";
 import Bookmarks from "./pages/Bookmarks.tsx";
+import MobileBottomNavigation from "./components/MobileBottomNavigation.tsx";
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,37 +25,34 @@ function App() {
 
   const [navIndex, setNavIndex] = useState<number>(0);
 
-  // useLayoutEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
+  const [scrollStyle, setScrollStyle] = useState("");
 
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []); // Empty dependency array to run the effect only once on mount
-
-  // useLayoutEffect(() => {
-  //   if (navElementRef.current) {
-  //     const aboveElementWidth = navElementRef.current.offsetWidth;
-  //     setMainElementMargin(aboveElementWidth);
-  //   }
-  // }, [windowWidth]);
+  let prevScrollPoint = window.scrollY;
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (prevScrollPoint < window.scrollY) {
+        setScrollStyle("opacity-80");
+      } else {
+        setScrollStyle("opacity-100");
+      }
+      prevScrollPoint = window.scrollY;
+    },
+    false,
+  );
 
   const location = useLocation();
 
   return (
     <React.StrictMode>
       {/* <Router> */}
-      <div data-mode="dark" className="flex dark:bg-[black] lg:justify-center">
+      <div data-mode="dark" className="flex dark:bg-[black] md:justify-center">
         <PremiumModal modalRef={modalRef} />
         {location.pathname !== "/" && (
           <div>
             <nav
               // ref={navElementRef}
-              className="fixed border-r border-borderColor"
+              className="fixed hidden border-r border-borderColor md:block"
             >
               <Sidebar
                 navIndex={navIndex}
@@ -66,13 +64,11 @@ function App() {
         )}
 
         <Routes>
-          {/* <React.Fragment> */}
-
           <Route
             path="/home"
             element={
               <div
-                className="ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
@@ -84,7 +80,7 @@ function App() {
             path="/notifications"
             element={
               <div
-                className="ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
@@ -96,7 +92,7 @@ function App() {
             path="/bookmarks"
             element={
               <div
-                className="ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
@@ -108,7 +104,7 @@ function App() {
             path="/:userName"
             element={
               <div
-                className="ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
@@ -125,9 +121,13 @@ function App() {
             }
           />
         </Routes>
+        <div
+          className={`fixed bottom-0 left-0 w-full opacity-70 md:hidden ${scrollStyle}`}
+        >
+          <MobileBottomNavigation />
+        </div>
         {location.pathname !== "/" && <RighBar modalRef={modalRef} />}
       </div>
-      {/* </Router> */}
     </React.StrictMode>
   );
 }

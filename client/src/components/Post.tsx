@@ -11,7 +11,6 @@ import MorePostIcon from "../assets/icons/MorePostIcon";
 import { Link } from "react-router-dom";
 
 const Post = (props: PostType) => {
-  console.log(props);
   const [styles, setStyles] = useState<ObjectType[] | null>(null);
 
   useEffect(() => {
@@ -183,7 +182,7 @@ const Post = (props: PostType) => {
               className="flex items-center justify-center"
               id="lonely-buttons"
             >
-              <div className="group flex items-center">
+              <div className="group hidden items-center md:flex">
                 <ActionIcon
                   sizeStyles="h-[20px] w-[20px]"
                   icon={<BookmarkIcon color="#2887d0" />}
