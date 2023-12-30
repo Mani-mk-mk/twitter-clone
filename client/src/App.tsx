@@ -32,9 +32,11 @@ function App() {
     "scroll",
     function () {
       if (prevScrollPoint < window.scrollY) {
-        setScrollStyle("opacity-80");
-      } else {
+        // console.log("scrolling-up");
         setScrollStyle("opacity-100");
+      } else {
+        // console.log("scrolling-down");
+        setScrollStyle("opacity-80");
       }
       prevScrollPoint = window.scrollY;
     },
@@ -121,11 +123,13 @@ function App() {
             }
           />
         </Routes>
-        <div
-          className={`fixed bottom-0 left-0 w-full opacity-70 md:hidden ${scrollStyle}`}
-        >
-          <MobileBottomNavigation />
-        </div>
+        {location.pathname !== "/" && (
+          <div
+            className={`fixed bottom-0 left-0 w-full opacity-70 md:hidden ${scrollStyle}`}
+          >
+            <MobileBottomNavigation />
+          </div>
+        )}
         {location.pathname !== "/" && <RighBar modalRef={modalRef} />}
       </div>
     </React.StrictMode>

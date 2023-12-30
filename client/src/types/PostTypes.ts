@@ -1,5 +1,5 @@
 export interface PostProps {
-  tweet: string;
+  tweet?: string;
   images?: string[];
   stats: StatsProps;
 }
@@ -21,7 +21,7 @@ export interface User {
 export interface PostType extends PostProps {
   id: number;
   userId: number;
-  user: User;
+  user?: User;
 }
 
 export interface StatsProps {

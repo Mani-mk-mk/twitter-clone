@@ -12,7 +12,9 @@ const Home = (props: HeaderProps) => {
 
   useEffect(() => {
     const getPosts = async () => {
+      console.log("Fetching posts...");
       const response = await axiosInstance.get("posts?_expand=user");
+      console.log(response);
       if (response.status === 200) {
         setPosts(response.data);
       }

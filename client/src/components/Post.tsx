@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { ObjectType, PostType } from "../types/PostTypes";
+import { PostType } from "../types/PostTypes";
 import ActionIcon from "./ActionIcon";
 import CommentIcon from "../assets/icons/CommentIcon";
 import BookmarkIcon from "../assets/icons/BookmarksIcon";
@@ -9,71 +8,17 @@ import ViewsIcon from "../assets/icons/ViewsIcon";
 import LikeIcon from "../assets/icons/LikeIcon";
 import MorePostIcon from "../assets/icons/MorePostIcon";
 import { Link } from "react-router-dom";
+import RenderImage from "./RenderImage";
 
 const Post = (props: PostType) => {
-  const [styles, setStyles] = useState<ObjectType[] | null>(null);
-
-  useEffect(() => {
-    const imageStyles: ObjectType[][] = [
-      [{ div: "rounded-lg", image: "rounded-lg w-full" }],
-      [
-        {
-          div: "rounded-l-lg",
-          image:
-            "border-r min-h-[250px] h-full object-cover border-borderColor rounded-l-lg",
-        },
-        {
-          div: "rounded-r-lg",
-          image:
-            "border-l min-h-[250px] h-full object-cover border-borderColor rounded-r-lg",
-        },
-      ],
-      [
-        {
-          div: "rounded-tl-lg",
-          image: "border-r border-b border-borderColor rounded-tl-lg",
-        },
-        {
-          div: "rounded-tr-lg",
-          image: "border-l border-b border-borderColor rounded-tr-lg",
-        },
-        {
-          div: "rounded-bl-lg",
-          image: "border-t border-r border-borderColor rounded-bl-lg",
-        },
-      ],
-      [
-        {
-          div: "rounded-tl-lg",
-          image: "border-r border-b border-borderColor rounded-tl-lg",
-        },
-        {
-          div: "rounded-tr-lg",
-          image: "border-l border-b border-borderColor rounded-tr-lg",
-        },
-        {
-          div: "rounded-bl-lg",
-          image: "border-t border-r border-borderColor rounded-bl-lg",
-        },
-        {
-          div: "rounded-br-lg",
-          image: "border-t border-l border-borderColor rounded-br-lg",
-        },
-      ],
-    ];
-
-    const styleIndex = props.images ? props.images.length - 1 : 0;
-    setStyles(imageStyles[styleIndex]);
-  }, [props]);
-
   return (
     <div className="cursor-pointer border-y border-borderColor p-4 text-white hover:bg-hover-dark">
       <div className="flex w-full items-start gap-4">
         <div className="h-[40px] w-[40px] rounded-full ">
-          <Link to={`/${props.user.userName.slice(1)}`}>
+          <Link to={`/${props.user?.userName.slice(1)}`}>
             <img
               className="rounded-full"
-              src={props.user.profilePictureUri}
+              src={props.user?.profilePictureUri}
               alt="user-profile-picture"
             />
           </Link>
@@ -84,14 +29,14 @@ const Post = (props: PostType) => {
             id="user-data-container"
           >
             <div className="flex items-center gap-2 pb-1">
-              <Link to={`/${props.user.userName.slice(1)}`}>
+              <Link to={`/${props.user?.userName.slice(1)}`}>
                 <h4 className="font-bold text-white hover:underline">
-                  {props.user.profileName}
+                  {props.user?.profileName}
                 </h4>
               </Link>
-              <Link to={`/${props.user.userName.slice(1)}`}>
+              <Link to={`/${props.user?.userName.slice(1)}`}>
                 <p className="text-unhighlighted-color">
-                  {props.user.userName}
+                  {props.user?.userName}
                 </p>
               </Link>
             </div>
@@ -107,7 +52,7 @@ const Post = (props: PostType) => {
           <div id="post-text">
             <p className="pb-4 pr-8 font-roboto">{props.tweet}</p>
           </div>
-          <div
+          {/* <div
             // change style according to image count
             className={`grid ${
               props.images &&
@@ -125,7 +70,9 @@ const Post = (props: PostType) => {
                   />
                 </div>
               ))}
-          </div>
+          </div> */}
+
+          {props.images && <RenderImage images={props.images} />}
 
           <div
             className="flex items-center justify-between pt-2"
@@ -153,7 +100,6 @@ const Post = (props: PostType) => {
                 {props.stats.retweets}
               </p>
             </div>
-
             <div className="group flex items-center">
               <ActionIcon
                 sizeStyles="h-[20px] w-[20px]"
@@ -165,7 +111,6 @@ const Post = (props: PostType) => {
                 {props.stats.likeCount}
               </p>
             </div>
-
             <div className="group flex items-center">
               <ActionIcon
                 sizeStyles="h-[20px] w-[20px]"
@@ -177,7 +122,6 @@ const Post = (props: PostType) => {
                 {props.stats.views}
               </p>
             </div>
-
             <div
               className="flex items-center justify-center"
               id="lonely-buttons"
