@@ -12,7 +12,7 @@ import RenderImage from "./RenderImage";
 
 const Post = (props: PostType) => {
   return (
-    <div className="cursor-pointer border-y border-borderColor p-4 text-white hover:bg-hover-dark">
+    <div className="cursor-pointer border border-borderColor p-4 text-white hover:bg-hover-dark">
       <div className="flex w-full items-start gap-4">
         <div className="h-[40px] w-[40px] rounded-full ">
           <Link to={`/${props.user?.userName.slice(1)}`}>
@@ -52,25 +52,6 @@ const Post = (props: PostType) => {
           <div id="post-text">
             <p className="pb-4 pr-8 font-roboto">{props.tweet}</p>
           </div>
-          {/* <div
-            // change style according to image count
-            className={`grid ${
-              props.images &&
-              props.images?.length % 2 === 0 &&
-              "h-full grid-cols-2"
-            }`}
-          >
-            {props.images &&
-              props.images.map((image, key) => (
-                <div key={key} className={styles?.[key]?.div}>
-                  <img
-                    src={image}
-                    className={styles?.[key]?.image}
-                    alt="Post-image"
-                  />
-                </div>
-              ))}
-          </div> */}
 
           {props.images && <RenderImage images={props.images} />}
 

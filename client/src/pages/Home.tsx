@@ -59,7 +59,6 @@ const Home = (props: HeaderProps) => {
           <div>Following</div>
         </div>
       </div> */}
-      {/* <UserProfile /> */}
     </main>
   );
 };
