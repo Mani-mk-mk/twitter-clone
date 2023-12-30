@@ -94,7 +94,7 @@ function App() {
             path="/bookmarks"
             element={
               <div
-                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:mb-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >

@@ -56,7 +56,7 @@ const PostBox = () => {
   const postTweet = async () => {
     console.log("Trying to post tweet...");
     const defaultStats: StatsProps = {
-      likeCount: 0,
+      likes: 0,
       comments: 0,
       views: 0,
       retweets: 0,
@@ -80,7 +80,10 @@ const PostBox = () => {
   };
 
   return (
-    <div className="w-full p-4 dark:bg-black" id="postbox-container">
+    <div
+      className="w-full border border-borderColor p-4 dark:bg-black"
+      id="postbox-container"
+    >
       <div className="flex items-center gap-4">
         <div className="h-[40px] w-[40px] rounded-full ">
           <Link to={`/${profileData?.userName.slice(1)}`}>

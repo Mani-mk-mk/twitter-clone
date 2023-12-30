@@ -1,9 +1,13 @@
 export interface PostProps {
   tweet?: string;
   images?: string[];
-  stats: StatsProps;
+  stats?: StatsProps;
 }
-
+export interface PostType extends PostProps {
+  id: number;
+  userId: number;
+  user?: User;
+}
 export interface User {
   id: number;
   userName: string;
@@ -18,14 +22,8 @@ export interface User {
   following: number[];
 }
 
-export interface PostType extends PostProps {
-  id: number;
-  userId: number;
-  user?: User;
-}
-
 export interface StatsProps {
-  likeCount: number | string;
+  likes: number | string;
   comments: number | string;
   views: number | string;
   retweets: number | string;

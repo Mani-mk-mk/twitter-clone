@@ -89,7 +89,7 @@ const Post = (props: PostType) => {
                 additionalStyles="text-unhighlighted-color hover:text-likeHoverText group-hover:text-likeHoverText hover:bg-likeHoverBg p-2"
               />
               <p className="text-sm text-unhighlighted-color group-hover:text-likeHoverText">
-                {props.stats.likeCount}
+                {props.stats.likes}
               </p>
             </div>
             <div className="group flex items-center">
