@@ -4,40 +4,21 @@ import { HeaderProps } from "../types/types";
 import axiosInstance from "../utils/axios";
 import { BookmarksType } from "../types/StatsType";
 import Post from "../components/Post";
-import { User } from "../types/PostTypes";
 
 const Bookmarks = (props: HeaderProps) => {
   const [bookmarks, setBookmarks] = useState<BookmarksType[] | null>(null);
-
-  const getUser: (id: number) => Promise<User> = async (id: number) => {
-    try {
-      const response = await axiosInstance.get("/users/" + id);
-      if (response.status === 200) return response.data;
-    } catch (error) {
-      console.log(error);
-      return {};
-    }
-  };
+  const defaultUser = 0;
 
   useEffect(() => {
     const getBookmarks = async () => {
       try {
-        const response = await axiosInstance.get("/bookmarks?_expand=post");
+        const response = await axiosInstance.get(
+          "/bookmarks?bookmarkedBy=" +
+            defaultUser +
+            "&_expand=post&_expand=user",
+        );
         if (response.status === 200) {
-          const bookmarkData = response.data;
-
-          // Use Promise.all to concurrently fetch user data for all bookmarks
-          const usersPromises = bookmarkData.map(
-            async (bookmark: { post: { userId: number } }) => {
-              const user = await getUser(bookmark.post.userId);
-              return { ...bookmark.post, user };
-            },
-          );
-
-          // Wait for all promises to resolve
-          const bookmarksWithUsers = await Promise.all(usersPromises);
-
-          setBookmarks(bookmarksWithUsers);
+          setBookmarks(response.data);
         }
       } catch (error) {
         console.log(error);
@@ -46,7 +27,7 @@ const Bookmarks = (props: HeaderProps) => {
 
     getBookmarks();
     // console.log(bookmarks);
-  }, []);
+  }, [defaultUser]);
 
   return (
     <main className="min-h-screen w-full max-w-[600px] border-r border-borderColor lg:w-[600px]">
@@ -68,7 +49,8 @@ const Bookmarks = (props: HeaderProps) => {
       ) : (
         <div>
           {bookmarks?.map((bookmark, key) => {
-            return <Post {...bookmark} key={key} />;
+            bookmark.post["user"] = bookmark.user;
+            return <Post {...bookmark.post} key={key} />;
           })}
         </div>
       )}

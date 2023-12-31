@@ -10,6 +10,7 @@ import PremiumModal from "./components/PremiumModal.tsx";
 import Notifications from "./pages/Notifications.tsx";
 import Bookmarks from "./pages/Bookmarks.tsx";
 import MobileBottomNavigation from "./components/MobileBottomNavigation.tsx";
+import PostView from "./pages/PostView.tsx";
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -111,6 +112,14 @@ function App() {
                 data-mode="dark"
               >
                 <UserProfile />
+              </div>
+            }
+          />
+          <Route
+            path="/posts/:postId"
+            element={
+              <div className="mb-[60px] ml-0 md:mb-0 md:ml-[90px] lg:ml-[300px]">
+                <PostView />
               </div>
             }
           />

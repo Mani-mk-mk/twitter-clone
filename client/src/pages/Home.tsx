@@ -6,6 +6,7 @@ import { HeaderProps } from "../types/types";
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
 import { PostType } from "../types/PostTypes";
+import { Link } from "react-router-dom";
 
 const Home = (props: HeaderProps) => {
   const [posts, setPosts] = useState<PostType[] | null>(null);
@@ -33,32 +34,11 @@ const Home = (props: HeaderProps) => {
       <div>
         <PostBox />
       </div>
-      {posts?.map((post, key) => <Post {...post} key={key} />)}
-
-      {/*TODO: HoverInfo Tab needs work */}
-      {/* <div className="max-w-[250px] border border-white text-white">
-        <div className="flex justify-between">
-          <div>
-            <img src="" alt="profile-image" />
-          </div>
-          <div>
-            <button className="rounded-full bg-white px-4 py-2 text-sm font-bold text-black">
-              Follow
-            </button>
-          </div>
-        </div>
-        <div>
-          <h4 className="font-bold">Mayur</h4>
-          <p className="text-unhighlighted-color">@133_At_Hobart</p>
-        </div>
-        <div>
-          <p>Die Heart Viratian-Abdian ❤🌝✌ Maratha🚩 parody</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <div>Followers</div>
-          <div>Following</div>
-        </div>
-      </div> */}
+      {posts?.map((post, key) => (
+        <Link to={`/posts/${post.id}`}>
+          <Post {...post} key={key} />
+        </Link>
+      ))}
     </main>
   );
 };
