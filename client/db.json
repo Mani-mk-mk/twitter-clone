@@ -177,12 +177,14 @@
 		{
 			"id": 1,
 			"userId": 0,
-			"postId": 1
+			"postId": 1,
+			"bookmarkedBy": 0
 		},
 		{
-			"id": 1,
+			"id": 2,
 			"userId": 0,
-			"postId": 2
+			"postId": 2,
+			"bookmarkedBy": 0
 		}
 	],
 	"likes": [
