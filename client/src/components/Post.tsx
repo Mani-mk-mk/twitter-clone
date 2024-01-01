@@ -13,47 +13,71 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
 import HoverInfo from "./HoverInfo";
 
-interface BookmarkType {
-  id: number;
-  userId: number;
-  postId: number;
-}
-
 const Post = (props: PostType) => {
-  const [bookmarks, setBookmarks] = useState<null | number[]>(null);
-  const [likes, setLikes] = useState<null | number[]>(null);
+  const [postLiked, setPostLiked] = useState(false);
+  const [postBookmarked, setPostBookmarked] = useState(false);
 
   const defaultUserId = 0;
 
   useEffect(() => {
-    try {
-      const getBookmarks = async () => {
-        const response = await axiosInstance.get(
-          "/bookmarks/?userId=" + defaultUserId,
-        );
-        if (response.status === 200) {
-          setBookmarks(response.data.map((data: BookmarkType) => data.postId));
-        }
-      };
-      getBookmarks();
+    if (props.likes) setPostLiked(props.likes.includes(props.id));
+    if (props.bookmarks) setPostBookmarked(props.bookmarks.includes(props.id));
+  }, [props.bookmarks, props.id, props.likes]);
 
-      const getLikes = async () => {
-        const response = await axiosInstance.get(
-          "/likes/?userId=" + defaultUserId,
-        );
-        if (response.status === 200) {
-          setLikes(response.data.map((data: BookmarkType) => data.postId));
-        }
-      };
-      getLikes();
+  const likePost = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    setPostLiked((prevLikeStatus) => !prevLikeStatus);
+    let maxLikeId: number = 0;
+    const response = await axiosInstance.get("/likes?_sort=id&_order=desc");
+    console.log(response);
+    if (response.status === 200) {
+      maxLikeId = response.data[0].id;
+    }
+
+    try {
+      if (!postLiked) {
+        const response = await axiosInstance.post("/likes", {
+          id: maxLikeId + 1,
+          userId: props.userId,
+          postId: props.id,
+          bookmarkedBy: defaultUserId,
+        });
+        console.log(response.status);
+      } else {
+        const response = await axiosInstance.delete("/likes/" + props.id);
+        console.log(response);
+      }
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    // console.log(bookmarks);
-  }, [bookmarks]);
+  const bookmarkPost = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    setPostBookmarked((prevBookmarkStatus) => !prevBookmarkStatus);
+    let maxBookmarkId: number = 0;
+    const response = await axiosInstance.get("/bookmarks?_sort=id&_order=desc");
+    console.log(response);
+    if (response.status === 200) {
+      maxBookmarkId = response.data[0].id;
+    }
+
+    try {
+      if (!postBookmarked) {
+        const response = await axiosInstance.post("/bookmarks", {
+          id: maxBookmarkId + 1,
+          userId: defaultUserId,
+          postId: props.id,
+        });
+        console.log(response.status);
+      } else {
+        const response = await axiosInstance.delete("/bookmarks/" + props.id);
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="cursor-pointer border border-borderColor p-4 text-white hover:bg-hover-dark">
@@ -66,7 +90,7 @@ const Post = (props: PostType) => {
               alt="user-profile-picture"
             />
             <div className="relative z-10 hidden group-hover:block">
-              <HoverInfo {...props.user!} />
+              {props.user && <HoverInfo {...props.user!} />}
             </div>
           </Link>
         </div>
@@ -131,17 +155,13 @@ const Post = (props: PostType) => {
                 {props.stats?.retweets}
               </p>
             </div>
-            <div className="group flex items-center">
+            <div onClick={likePost} className="group flex items-center">
               <ActionIcon
                 sizeStyles="h-[20px] w-[20px]"
                 icon={
                   <LikeIcon
-                    active={likes ? likes.includes(props.id) : false}
-                    color={
-                      likes && likes.includes(props.id)
-                        ? "text-likeHoverText"
-                        : "#2887d0"
-                    }
+                    active={postLiked}
+                    color={postLiked ? "text-likeHoverText" : "#2887d0"}
                   />
                 }
                 iconText="Likes"
@@ -150,7 +170,7 @@ const Post = (props: PostType) => {
               <p
                 className={
                   "text-sm group-hover:text-likeHoverText " +
-                  (likes && likes.includes(props.id)
+                  (postLiked
                     ? "text-likeHoverText"
                     : "text-unhighlighted-color")
                 }
@@ -173,16 +193,17 @@ const Post = (props: PostType) => {
               className="flex items-center justify-center"
               id="lonely-buttons"
             >
-              <div className="group hidden items-center md:flex">
+              <div
+                onClick={bookmarkPost}
+                className="group hidden items-center md:flex"
+              >
                 <ActionIcon
                   sizeStyles="h-[20px] w-[20px]"
                   icon={
                     <BookmarkIcon
-                      active={bookmarks ? bookmarks.includes(props.id) : false}
+                      active={postBookmarked}
                       color={
-                        bookmarks && bookmarks.includes(props.id)
-                          ? "text-commentHoverText"
-                          : "#2887d0"
+                        postBookmarked ? "text-commentHoverText" : "#2887d0"
                       }
                     />
                   }

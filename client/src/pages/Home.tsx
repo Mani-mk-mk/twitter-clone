@@ -8,8 +8,46 @@ import axiosInstance from "../utils/axios";
 import { PostType } from "../types/PostTypes";
 import { Link } from "react-router-dom";
 
+interface BookmarkType {
+  id: number;
+  userId: number;
+  postId: number;
+}
+
 const Home = (props: HeaderProps) => {
   const [posts, setPosts] = useState<PostType[] | null>(null);
+  const [bookmarks, setBookmarks] = useState<null | number[]>(null);
+  const [likes, setLikes] = useState<null | number[]>(null);
+
+  const defaultUserId = 0;
+
+  useEffect(() => {
+    try {
+      const getBookmarks = async () => {
+        const response = await axiosInstance.get(
+          "/bookmarks?bookmarkedBy=" + defaultUserId,
+        );
+        if (response.status === 200) {
+          setBookmarks(response.data.map((data: BookmarkType) => data.postId));
+        }
+      };
+      getBookmarks();
+
+      const getLikes = async () => {
+        const response = await axiosInstance.get(
+          "/likes/?userId=" + defaultUserId,
+        );
+        if (response.status === 200) {
+          setLikes(response.data.map((data: BookmarkType) => data.postId));
+        }
+      };
+      getLikes();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {}, [bookmarks, props]);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -36,7 +74,7 @@ const Home = (props: HeaderProps) => {
       </div>
       {posts?.map((post, key) => (
         <Link to={`/posts/${post.id}`}>
-          <Post {...post} key={key} />
+          <Post {...post} bookmarks={bookmarks} likes={likes} key={key} />
         </Link>
       ))}
     </main>

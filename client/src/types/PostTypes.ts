@@ -7,6 +7,8 @@ export interface PostType extends PostProps {
   id: number;
   userId: number;
   user?: User;
+  likes?: number[] | null;
+  bookmarks?: number[] | null;
 }
 export interface User {
   id: number;
