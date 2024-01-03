@@ -11,7 +11,7 @@ const HoverInfo = (props: User | null) => {
         ></div>
 
         <div className="relative z-20 rounded-xl bg-dark p-2">
-          <div className=" w-[250px] max-w-[300px] text-white">
+          <div className=" w-[250px] max-w-[300px] text-white md:w-[300px]">
             <div className="flex justify-between">
               <div className="h-[80px] w-[80px] rounded-full">
                 <img
@@ -28,10 +28,12 @@ const HoverInfo = (props: User | null) => {
             </div>
             <div>
               <Link to={`/${props?.userName.slice(1)}`}>
-                <h1 className="font-bold">{props?.profileName}</h1>
+                <h1 className="pt-1 font-bold">{props?.profileName}</h1>
               </Link>
               <Link to={`/${props?.userName.slice(1)}`}>
-                <p className="text-unhighlighted-color">{props?.userName}</p>
+                <p className="pb-1 text-unhighlighted-color">
+                  {props?.userName}
+                </p>
               </Link>
             </div>
             {props?.bio && (
@@ -39,7 +41,7 @@ const HoverInfo = (props: User | null) => {
                 <p>{props?.bio}</p>
               </div>
             )}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 py-2">
               <div>
                 <span>{props?.followers.length}</span> Followers
               </div>

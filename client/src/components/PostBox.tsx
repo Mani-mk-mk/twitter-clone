@@ -10,7 +10,16 @@ import axiosInstance from "../utils/axios";
 import { PostType, StatsProps, User } from "../types/PostTypes";
 import { Link } from "react-router-dom";
 
-const PostBox = () => {
+interface PostBoxProps {
+  posts: PostType[] | null;
+  setPosts: React.Dispatch<React.SetStateAction<PostType[] | null>>;
+  showAlerts: boolean;
+  setShowAlerts: React.Dispatch<React.SetStateAction<boolean>>;
+  alertMessage: string;
+  setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const PostBox = (props: PostBoxProps) => {
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     // Handle the selected file
     const selectedFile = event.target.files?.[0];
@@ -69,9 +78,24 @@ const PostBox = () => {
       tweet: tweet,
       stats: defaultStats,
     };
-    const response = await axiosInstance.post("/posts", data);
-    if (response.status === 201) {
-      setTweet("");
+
+    try {
+      const response = await axiosInstance.post("/posts", data);
+      if (response.status === 201) {
+        props.setPosts([data, ...props.posts!]);
+        setTweet("");
+        props.setAlertMessage("Posted successfully.");
+        props.setShowAlerts(true);
+        setTimeout(() => {
+          props.setShowAlerts(false);
+        }, 3000); // Hide the alert after 5 seconds
+      }
+    } catch (error) {
+      props.setAlertMessage("Something went wrong.");
+      props.setShowAlerts(true);
+      setTimeout(() => {
+        props.setShowAlerts(false);
+      }, 3000); // Hide the alert after 5 seconds
     }
   };
 

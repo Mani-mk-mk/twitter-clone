@@ -1,33 +1,51 @@
 import { Link } from "react-router-dom";
 import MorePostIcon from "../assets/icons/MorePostIcon";
 import ActionIcon from "./ActionIcon";
+import HoverInfo from "./HoverInfo";
+import { User } from "../types/PostTypes";
 
 interface UserDetailsProps {
-  profileImageUri: string;
-  profileName: string;
-  userName: string;
+  profilePictureUri: string | undefined;
+  profileName: string | undefined;
+  userName: string | undefined;
+  user: User | undefined;
 }
 
 const UserDetailsTab = (props: UserDetailsProps) => {
   return (
-    <div>
-      <div className="h-[40px] w-[40px] rounded-full">
-        <Link to={`/${props.userName.slice(1)}`}>
+    <div className="flex  items-center gap-4 p-4 text-white">
+      <div className="group h-[50px] w-[50px] rounded-full">
+        <Link to={`/${props.userName?.slice(1)}`}>
           <img
-            src={props.profileImageUri}
-            className="h-full w-full rounded-full"
+            src={props.profilePictureUri}
+            className="w-full rounded-full"
             alt="profile-image"
           />
+          <div className="relative z-10 hidden group-hover:block">
+            {props.user && <HoverInfo {...props.user} />}
+          </div>
         </Link>
       </div>
-      <div>
+      <div className="flex w-full items-center justify-between">
         <div>
-          <Link to={`/${props.userName.slice(1)}`}>
-            <h1>{props.profileName}</h1>
-          </Link>
-          <Link to={`/${props.userName.slice(1)}`}>
-            <p>{props.userName}</p>
-          </Link>
+          <div className="group">
+            <Link to={`/${props.userName?.slice(1)}`}>
+              <h1 className="text-md font-bold hover:underline">
+                {props.profileName}
+              </h1>
+              <div className="relative z-10 hidden group-hover:block">
+                {props.user && <HoverInfo {...props.user} />}
+              </div>
+            </Link>
+          </div>
+          <div className="group">
+            <Link to={`/${props.userName?.slice(1)}`}>
+              <p className="text-unhighlighted-color">{props.userName}</p>
+              <div className="relative z-10 hidden group-hover:block">
+                {props.user && <HoverInfo {...props.user} />}
+              </div>
+            </Link>
+          </div>
         </div>
         <div>
           <ActionIcon

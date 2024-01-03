@@ -3,7 +3,8 @@ import HomeHeader from "../components/HomeHeader";
 import { PostType } from "../types/PostTypes";
 import axiosInstance from "../utils/axios";
 import { useParams } from "react-router-dom";
-import Post from "../components/Post";
+import UserDetailsTab from "../components/UserDetailsTab";
+import SinglePostView from "../components/SinglePostView";
 
 const PostView = () => {
   const [post, setPost] = useState<PostType | null>(null);
@@ -28,7 +29,14 @@ const PostView = () => {
         <HomeHeader tabIndex={0} />
       </div>
 
-      {post && <Post {...post} />}
+      <UserDetailsTab
+        user={post?.user}
+        profileName={post?.user?.profileName}
+        profilePictureUri={post?.user?.profilePictureUri}
+        userName={post?.user?.userName}
+      />
+
+      {post && <SinglePostView post={post} />}
     </main>
   );
 };

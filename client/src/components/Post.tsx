@@ -66,8 +66,9 @@ const Post = (props: PostType) => {
       if (!postBookmarked) {
         const response = await axiosInstance.post("/bookmarks", {
           id: maxBookmarkId + 1,
-          userId: defaultUserId,
+          userId: props.userId,
           postId: props.id,
+          bookmarkedBy: defaultUserId
         });
         console.log(response.status);
       } else {

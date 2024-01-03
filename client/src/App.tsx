@@ -11,16 +11,11 @@ import Notifications from "./pages/Notifications.tsx";
 import Bookmarks from "./pages/Bookmarks.tsx";
 import MobileBottomNavigation from "./components/MobileBottomNavigation.tsx";
 import PostView from "./pages/PostView.tsx";
+import Alerts from "./components/Alerts.tsx";
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [darkMode, setDarkMode] = useState<boolean>(true);
-
-  // setDarkMode(true);
-
-  // const navElementRef = useRef<HTMLDivElement | null>(null);
-  // const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  // const [mainElementMargin, setMainElementMargin] = useState<number>(300);
+  const [showAlerts, setShowAlerts] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -49,7 +44,10 @@ function App() {
   return (
     <React.StrictMode>
       {/* <Router> */}
-      <div data-mode="dark" className="flex dark:bg-[black] md:justify-center">
+      <div
+        data-mode="dark"
+        className="relative flex dark:bg-[black] md:justify-center"
+      >
         <PremiumModal modalRef={modalRef} />
         {location.pathname !== "/" && (
           <div>
@@ -71,11 +69,17 @@ function App() {
             path="/home"
             element={
               <div
-                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:mb-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
-                <Home tabIndex={navIndex} />
+                <Home
+                  showAlerts={showAlerts}
+                  setShowAlerts={setShowAlerts}
+                  alertMessage={alertMessage}
+                  setAlertMessage={setAlertMessage}
+                  tabIndex={navIndex}
+                />
               </div>
             }
           />
@@ -107,7 +111,7 @@ function App() {
             path="/:userName"
             element={
               <div
-                className="mb-[60px] ml-0 md:ml-[90px] lg:ml-[300px]"
+                className="mb-[60px] ml-0 md:mb-0 md:ml-[90px] lg:ml-[300px]"
                 // style={{ marginLeft: `${mainElementMargin}px` }}
                 data-mode="dark"
               >
@@ -140,7 +144,9 @@ function App() {
           </div>
         )}
         {location.pathname !== "/" && <RighBar modalRef={modalRef} />}
+        {showAlerts && <Alerts message={alertMessage} />}
       </div>
+      )
     </React.StrictMode>
   );
 }
