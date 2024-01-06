@@ -2,9 +2,16 @@
   "users": [
     {
       "id": 0,
+      "postId": [],
       "userName": "@SaiyansRandom",
       "profileName": "Super Saiyan",
-      "profilePictureUri": "ds"
+      "profilePictureUri": "https://i.pinimg.com/originals/92/a3/c0/92a3c0c98544bd39b099ea96e7c3f1a3.jpg",
+      "bannerUri": "https://e0.pxfuel.com/wallpapers/638/176/desktop-wallpaper-headers-by-jaxon-twitter-header-hypebeast-header.jpg",
+      "bio": "This is the default account you'll be using when clicked on Sign in",
+      "following": [2, 3],
+      "followers": [2, 3],
+      "location": "Mumbai, India",
+      "joiningDate": "April 2023"
     },
     {
       "id": 1,
@@ -24,7 +31,7 @@
       "id": 2,
       "userName": "@JJK_Mya",
       "profileName": "JJK (Mya)",
-      "postId": 2,
+      "postId": [2],
       "bannerUri": "https://pbs.twimg.com/profile_banners/1650898234867433476/1697475122/600x200",
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1650899539350679554/NBoN9Bcr_400x400.jpg",
       "following": [],
@@ -54,7 +61,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -71,7 +78,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -85,7 +92,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -99,7 +106,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -113,7 +120,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -127,7 +134,7 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 1,
         "views": "341K"
       },
       "images": [
@@ -141,13 +148,127 @@
       "stats": {
         "comments": 103,
         "retweets": 636,
-        "likeCount": "8K",
+        "likes": 0,
         "views": "341K"
       },
       "images": [
         "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
         "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360"
       ]
+    },
+    {
+      "id": 8,
+      "tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 0,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360"
+      ]
+    }
+  ],
+  "bookmarks": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1,
+      "bookmarkedBy": 0
+    },
+    {
+      "id": 2,
+      "userId": 0,
+      "postId": 2,
+      "bookmarkedBy": 0
+    }
+  ],
+  "likes": [
+    {
+      "id": 0,
+      "userId": 1,
+      "postId": 1,
+      "likedBy": 0
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "postId": 2,
+      "likedBy": 0
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "postId": 3,
+      "likedBy": 0
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "postId": 6,
+      "likedBy": 1
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "postId": 6,
+      "likedBy": 0
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "postId": 3,
+      "likedBy": 1
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "postId": 4,
+      "likedBy": 0
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "postId": 5,
+      "likedBy": 0
+    }
+  ],
+  "retweets": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "userId": 0,
+      "postId": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1,
+      "comment": "This is my comment to your post!!",
+      "replies": [
+        {
+          "id": 1,
+          "userId": 0,
+          "postId": 1,
+          "comment": "This is my comment to your post!!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "postId": 1,
+      "comment": "Beautiful posts explaining stuff!"
     }
   ]
 }

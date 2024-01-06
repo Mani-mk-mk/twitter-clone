@@ -1,4 +1,4 @@
-import { PostType } from "../types/PostTypes";
+import { PostType, StatsProps } from "../types/PostTypes";
 import ActionIcon from "./ActionIcon";
 import CommentIcon from "../assets/icons/CommentIcon";
 import BookmarkIcon from "../assets/icons/BookmarksIcon";
@@ -16,39 +16,58 @@ import HoverInfo from "./HoverInfo";
 const Post = (props: PostType) => {
   const [postLiked, setPostLiked] = useState(false);
   const [postBookmarked, setPostBookmarked] = useState(false);
+  const [stats, setStats] = useState<StatsProps | undefined>(props.stats);
 
   const defaultUserId = 0;
 
+  // console.log(`Post id ${props.id}: ${postLiked}`);
+
   useEffect(() => {
+    // console.log("Props likes ", props.likes);
     if (props.likes) setPostLiked(props.likes.includes(props.id));
     if (props.bookmarks) setPostBookmarked(props.bookmarks.includes(props.id));
   }, [props.bookmarks, props.id, props.likes]);
 
   const likePost = async (event: React.MouseEvent) => {
-    event.preventDefault();
-    setPostLiked((prevLikeStatus) => !prevLikeStatus);
-    let maxLikeId: number = 0;
-    const response = await axiosInstance.get("/likes?_sort=id&_order=desc");
-    console.log(response);
-    if (response.status === 200) {
-      maxLikeId = response.data[0].id;
-    }
-
     try {
-      if (!postLiked) {
-        const response = await axiosInstance.post("/likes", {
+      event.preventDefault();
+      setPostLiked((prevLikeStatus) => !prevLikeStatus);
+
+      if (!props.userId || !props.id) {
+        throw new Error("Invalid user ID or post ID");
+      }
+      const maxLikeIdResponse = await axiosInstance.get(
+        "/likes?_sort=id&_order=desc",
+      );
+      if (maxLikeIdResponse.status !== 200) {
+        throw new Error("Failed to fetch maxLikeId");
+      }
+      const maxLikeId = maxLikeIdResponse.data[0]?.id || 0;
+
+      const likes = stats && stats?.likes + (postLiked ? -1 : 1);
+      setStats((prevStats) => {
+        if (prevStats) return { ...prevStats, likes: prevStats?.likes + 1 };
+      });
+
+      if (postLiked) {
+        await axiosInstance.delete(`/likes/${props.id}`);
+      } else {
+        await axiosInstance.post("/likes", {
           id: maxLikeId + 1,
           userId: props.userId,
           postId: props.id,
-          bookmarkedBy: defaultUserId,
+          likedBy: defaultUserId,
         });
-        console.log(response.status);
-      } else {
-        const response = await axiosInstance.delete("/likes/" + props.id);
-        console.log(response);
       }
+
+      await axiosInstance.patch(`/posts/${props.id}`, {
+        stats: { ...stats, likes },
+      });
     } catch (error) {
-      console.log(error);
+      // ErrorHandling
+      console.error("Error in likePost:", error);
+      // Rollback UI update if necessary
+      setPostLiked((prevLikeStatus) => !prevLikeStatus);
     }
   };
 
@@ -68,7 +87,7 @@ const Post = (props: PostType) => {
           id: maxBookmarkId + 1,
           userId: props.userId,
           postId: props.id,
-          bookmarkedBy: defaultUserId
+          bookmarkedBy: defaultUserId,
         });
         console.log(response.status);
       } else {
@@ -142,7 +161,7 @@ const Post = (props: PostType) => {
                 additionalStyles="hover:bg-commentHoverBg group-hover:text-commentHoverText hover:text-commentHoverText text-unhighlighted-color p-2"
               />
               <p className="text-sm text-unhighlighted-color group-hover:text-commentHoverText">
-                {props.stats?.comments}
+                {stats?.comments}
               </p>
             </div>
             <div className="group flex items-center">
@@ -153,7 +172,7 @@ const Post = (props: PostType) => {
                 additionalStyles="text-unhighlighted-color group-hover:text-retweetHoverText hover:text-retweetHoverText hover:bg-retweetHoverBg p-2"
               />
               <p className="text-sm text-unhighlighted-color group-hover:text-retweetHoverText">
-                {props.stats?.retweets}
+                {stats?.retweets}
               </p>
             </div>
             <div onClick={likePost} className="group flex items-center">
@@ -176,7 +195,7 @@ const Post = (props: PostType) => {
                     : "text-unhighlighted-color")
                 }
               >
-                {props.stats?.likes}
+                {stats?.likes}
               </p>
             </div>
             <div className="group flex items-center">
@@ -187,7 +206,7 @@ const Post = (props: PostType) => {
                 additionalStyles="text-unhighlighted-color group-hover:text-commentHoverText hover:text-commentHoverText hover:bg-commentHoverBg p-2"
               />
               <p className="text-sm text-unhighlighted-color group-hover:text-commentHoverText">
-                {props.stats?.views}
+                {stats?.views}
               </p>
             </div>
             <div

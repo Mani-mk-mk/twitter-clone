@@ -11,8 +11,8 @@ import CalendarIcon from "../assets/icons/CalendarIcon";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { PostsByUserDataType, ProfileDataType } from "../types/PostTypes";
-import Post from "../components/Post";
 import FullScreenLoader from "../components/FullScreenLoader";
+import UserPostTab from "../components/UserPostTab";
 
 const UserProfile = () => {
   const [profileTabIndex, setProfileTabIndex] = useState(0);
@@ -30,12 +30,19 @@ const UserProfile = () => {
 
     const fetchData = async () => {
       try {
+        const profileDataResponse = await axiosInstance.get(
+          `users?userName=@${userName}`,
+        );
+        if (profileDataResponse.status === 200) {
+          setProfileData(profileDataResponse.data[0]);
+        }
+
         if (profileTabIndex === 0) {
           const postsResponse = await axiosInstance.get(
             `users?userName=@${userName}&_embed=posts`,
           );
+          // console.log(postsResponse.data);
           if (postsResponse.status === 200) {
-            setProfileData(postsResponse.data[0]);
             setPostsByUser(postsResponse.data[0]);
           }
         }
@@ -47,7 +54,12 @@ const UserProfile = () => {
     };
 
     fetchData();
-  }, [profileTabIndex, userName]);
+  }, [profileData?.id, profileTabIndex, userName]);
+
+  useEffect(() => {
+    // console.log(postsByUser);
+  }, [profileTabIndex, postsByUser]);
+
   return (
     <>
       {isLoading ? (
@@ -170,17 +182,25 @@ const UserProfile = () => {
             <Tabs
               tabIndex={profileTabIndex}
               setTabIndex={setProfileTabIndex}
-              components={["Posts", "Replies", "Subs", "Highlights", "Media"]}
+              components={["Posts", "Replies", "Likes", "Media"]}
             />
           </div>
           {/* </div> */}
-          {postsByUser?.posts.map((post, key) => {
+
+          {/* {postsByUser?.posts.map((post, key) => {
             if (!profileData) {
               return;
             }
             post["user"] = profileData;
+            console.log(postsByUser);
             return <Post {...post} key={key} />;
-          })}
+          })} */}
+          <UserPostTab
+            tabIndex={profileTabIndex}
+            profileData={profileData}
+            userId={profileData ? profileData.id : 0}
+            postsByUser={postsByUser}
+          />
         </main>
       )}
     </>

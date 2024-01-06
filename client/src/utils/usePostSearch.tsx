@@ -18,11 +18,11 @@ const usePostSearch = (props: PostSearchProps) => {
 
   useEffect(() => {
     console.log("Page number: " + props.pageNumber);
+    if (posts === null || props.pageNumber === 1) {
+      console.log("Loading screen");
+      props.setIsLoading(true);
+    }
     const fetchData = async () => {
-      if (props.pageNumber === 1 || props.pageNumber === null) {
-        console.log("Loading screen");
-        props.setIsLoading(true);
-      }
       setError(false);
 
       try {
@@ -44,15 +44,17 @@ const usePostSearch = (props: PostSearchProps) => {
       } catch (err) {
         console.log(err);
         setError(true);
+        props.setIsLoading(false);
       } finally {
-        if (props.pageNumber === 1) {
-          console.log("Removing loading indicator");
-          props.setIsLoading(false);
-        }
+        // if (posts === null) {
+        //   console.log("Removing loading indicator");
+        props.setIsLoading(false);
+        // }
       }
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.pageNumber]);
 
   return { error, posts, setPosts, hasMore };

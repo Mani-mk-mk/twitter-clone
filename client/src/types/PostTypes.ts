@@ -1,3 +1,5 @@
+import { BookmarksType } from "./StatsType";
+
 export interface PostProps {
   tweet?: string;
   images?: string[];
@@ -25,7 +27,7 @@ export interface User {
 }
 
 export interface StatsProps {
-  likes: number | string;
+  likes: number;
   comments: number | string;
   views: number | string;
   retweets: number | string;
@@ -52,4 +54,9 @@ export interface ProfileDataType {
 
 export interface PostsByUserDataType extends ProfileDataType {
   posts: PostType[];
+}
+
+export interface LikePostsByUserDataType extends BookmarksType {
+  post: PostType;
+  user: User;
 }

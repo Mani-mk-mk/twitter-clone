@@ -14,6 +14,7 @@ interface BookmarkType {
   id: number;
   userId: number;
   postId: number;
+  bookmarkedBy: number;
 }
 
 interface HomeProps extends HeaderProps {
@@ -67,7 +68,7 @@ const Home = (props: HomeProps) => {
 
       const getLikes = async () => {
         const response = await axiosInstance.get(
-          "/likes/?userId=" + defaultUserId,
+          "/likes/?likedBy=" + defaultUserId,
         );
         if (response.status === 200) {
           setLikes(response.data.map((data: BookmarkType) => data.postId));
@@ -78,14 +79,6 @@ const Home = (props: HomeProps) => {
       console.log(error);
     }
   }, []);
-
-  useEffect(() => {
-    if (posts === null) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [posts]);
 
   return (
     <>
