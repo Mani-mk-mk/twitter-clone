@@ -1,237 +1,361 @@
 {
-	"users": [
-		{
-			"id": 0,
-			"postId": [],
-			"userName": "@SaiyansRandom",
-			"profileName": "Super Saiyan",
-			"profilePictureUri": "https://i.pinimg.com/originals/92/a3/c0/92a3c0c98544bd39b099ea96e7c3f1a3.jpg",
-			"bannerUri": "https://e0.pxfuel.com/wallpapers/638/176/desktop-wallpaper-headers-by-jaxon-twitter-header-hypebeast-header.jpg",
-			"bio": "This is the default account you'll be using when clicked on Sign in",
-			"following": [2, 3],
-			"followers": [2, 3],
-			"location": "Mumbai, India",
-			"joiningDate": "April 2023"
-		},
-		{
-			"id": 1,
-			"userName": "@CricCrazyJohns",
-			"postId": [1, 5, 6],
-			"profilePictureUri": "https://pbs.twimg.com/profile_images/1570500099373170688/VVVytBl2_400x400.jpg",
-			"profileName": "Johns.",
-			"bannerUri": "https://pbs.twimg.com/profile_banners/743735095308099585/1702229397/600x200",
-			"bio": "IPL, Mohanlal, Vijay, Cringe guy, Average in English, When people hate me, I find happiness through the hate. For Collaborations - DM",
-			"following": [2, 3],
-			"followers": [2, 3],
-			"location": "Kerala, India",
-			"joiningDate": "June 2016",
-			"attachments": "instagram.com/johns_benny_ccj"
-		},
-		{
-			"id": 2,
-			"userName": "@JJK_Mya",
-			"profileName": "JJK (Mya)",
-			"postId": [2],
-			"bannerUri": "https://pbs.twimg.com/profile_banners/1650898234867433476/1697475122/600x200",
-			"profilePictureUri": "https://pbs.twimg.com/profile_images/1650899539350679554/NBoN9Bcr_400x400.jpg",
-			"following": [],
-			"followers": [],
-			"location": "India",
-			"joiningDate": "April 2023"
-		},
-		{
-			"id": 3,
-			"userName": "@NarutoVibe",
-			"postId": [3, 4],
-			"profileName": "Naruto 🍜",
-			"profilePictureUri": "https://pbs.twimg.com/profile_images/1155233536913203201/4WGRaO8C_400x400.jpg",
-			"bannerUri": "https://pbs.twimg.com/profile_banners/2931675387/1608702213/600x200",
-			"bio": "Naruto Posts 🍥 • parody • All credits to Masashi Kishimoto & Studio Pierrot!",
-			"location": "Konaha",
-			"joiningDate": "December 2014",
-			"followers": [],
-			"following": []
-		}
-	],
-	"posts": [
-		{
-			"id": 1,
-			"tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
-			"userId": 1,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360"
-			]
-		},
-		{
-			"id": 2,
-			"tweet": "The context of this Gege self-art is that he suffers from poor eye sight so bad that eye drops end up everywhere on his face except his eye.\n Sorry for making y'all think he was nervous & sweating due to it lol😂",
-			"userId": 2,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GCNIWrmX0AA5eRR?format=jpg&name=small"
-			]
-		},
-		{
-			"id": 3,
-			"tweet": "I really hope the live action Naruto movie doesn't mess up the casting for these 4 😔",
-			"userId": 3,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/F_zU0DGbwAAhtNx?format=jpg&name=medium"
-			]
-		},
-		{
-			"id": 4,
-			"tweet": "Happy Birthday to the The Green Beast of Konoha, Rock Lee! 🍃",
-			"userId": 3,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/F_9xDKTbQAAsGP-?format=jpg&name=medium"
-			]
-		},
-		{
-			"id": 5,
-			"tweet": "",
-			"userId": 1,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GCIkcarWAAA4Ka7?format=jpg&name=large"
-			]
-		},
-		{
-			"id": 6,
-			"tweet": "What would you ask if they came as Santa Claus to your home?\n Drop your Christmas wishes here✍️",
-			"userId": 1,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GCMmwNfacAAKGQM?format=png&name=900x900"
-			]
-		},
-		{
-			"id": 7,
-			"tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
-			"userId": 1,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360"
-			]
-		},
-		{
-			"id": 8,
-			"tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
-			"userId": 1,
-			"stats": {
-				"comments": 103,
-				"retweets": 636,
-				"likes": "8K",
-				"views": "341K"
-			},
-			"images": [
-				"https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
-				"https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360"
-			]
-		}
-	],
-	"bookmarks": [
-		{
-			"id": 1,
-			"userId": 0,
-			"postId": 1,
-			"bookmarkedBy": 0
-		},
-		{
-			"id": 2,
-			"userId": 0,
-			"postId": 2,
-			"bookmarkedBy": 0
-		}
-	],
-	"likes": [
-		{
-			"id": 1,
-			"userId": 0,
-			"postId": 1
-		},
-		{
-			"id": 1,
-			"userId": 0,
-			"postId": 2
-		}
-	],
-	"retweets": [
-		{
-			"id": 1,
-			"userId": 0,
-			"postId": 1
-		},
-		{
-			"id": 2,
-			"userId": 0,
-			"postId": 2
-		}
-	],
-	"comments": [
-		{
-			"id": 1,
-			"userId": 0,
-			"postId": 1,
-			"comment": "This is my comment to your post!!",
-			"replies": [
-				{
-					"id": 1,
-					"userId": 0,
-					"postId": 1,
-					"comment": "This is my comment to your post!!"
-				}
-			]
-		},
-
-		{
-			"id": 2,
-			"userId": 1,
-			"postId": 1,
-			"comment": "Beautiful posts explaining stuff!"
-		}
-	]
+  "users": [
+    {
+      "id": 0,
+      "postId": [],
+      "userName": "@SaiyansRandom",
+      "profileName": "Super Saiyan",
+      "profilePictureUri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXUEK5jt09bSPIUd4TRdnuUVBTVVhcaqV0zrd2MQje6-VviQF6k0iYC5ccn_r01Mwo74M&usqp=CAU",
+      "bannerUri": "https://e0.pxfuel.com/wallpapers/638/176/desktop-wallpaper-headers-by-jaxon-twitter-header-hypebeast-header.jpg",
+      "bio": "This is the default account you'll be using when clicked on Sign in",
+      "following": [
+        2,
+        3
+      ],
+      "followers": [
+        2,
+        3
+      ],
+      "location": "Mumbai, India",
+      "joiningDate": "April 2023"
+    },
+    {
+      "id": 1,
+      "userName": "@CricCrazyJohns",
+      "postId": [
+        1,
+        5,
+        6
+      ],
+      "profilePictureUri": "https://pbs.twimg.com/profile_images/1570500099373170688/VVVytBl2_400x400.jpg",
+      "profileName": "Johns.",
+      "bannerUri": "https://pbs.twimg.com/profile_banners/743735095308099585/1702229397/600x200",
+      "bio": "IPL, Mohanlal, Vijay, Cringe guy, Average in English, When people hate me, I find happiness through the hate. For Collaborations - DM",
+      "following": [
+        2,
+        3
+      ],
+      "followers": [
+        2,
+        3
+      ],
+      "location": "Kerala, India",
+      "joiningDate": "June 2016",
+      "attachments": "instagram.com/johns_benny_ccj"
+    },
+    {
+      "id": 2,
+      "userName": "@JJK_Mya",
+      "profileName": "JJK (Mya)",
+      "postId": [
+        2
+      ],
+      "bannerUri": "https://pbs.twimg.com/profile_banners/1650898234867433476/1697475122/600x200",
+      "profilePictureUri": "https://pbs.twimg.com/profile_images/1650899539350679554/NBoN9Bcr_400x400.jpg",
+      "following": [],
+      "followers": [],
+      "location": "India",
+      "joiningDate": "April 2023"
+    },
+    {
+      "id": 3,
+      "userName": "@NarutoVibe",
+      "postId": [
+        3,
+        4
+      ],
+      "profileName": "Naruto 🍜",
+      "profilePictureUri": "https://pbs.twimg.com/profile_images/1155233536913203201/4WGRaO8C_400x400.jpg",
+      "bannerUri": "https://pbs.twimg.com/profile_banners/2931675387/1608702213/600x200",
+      "bio": "Naruto Posts 🍥 • parody • All credits to Masashi Kishimoto & Studio Pierrot!",
+      "location": "Konaha",
+      "joiningDate": "December 2014",
+      "followers": [],
+      "following": []
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ_SWXgAAjXwj?format=jpg&name=360x360"
+      ]
+    },
+    {
+      "id": 2,
+      "tweet": "The context of this Gege self-art is that he suffers from poor eye sight so bad that eye drops end up everywhere on his face except his eye.\n Sorry for making y'all think he was nervous & sweating due to it lol😂",
+      "userId": 2,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GCNIWrmX0AA5eRR?format=jpg&name=small"
+      ]
+    },
+    {
+      "id": 3,
+      "tweet": "I really hope the live action Naruto movie doesn't mess up the casting for these 4 😔",
+      "userId": 3,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/F_zU0DGbwAAhtNx?format=jpg&name=medium"
+      ]
+    },
+    {
+      "id": 4,
+      "tweet": "Happy Birthday to the The Green Beast of Konoha, Rock Lee! 🍃",
+      "userId": 3,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/F_9xDKTbQAAsGP-?format=jpg&name=medium"
+      ]
+    },
+    {
+      "id": 5,
+      "tweet": "",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GCIkcarWAAA4Ka7?format=jpg&name=large"
+      ]
+    },
+    {
+      "id": 6,
+      "tweet": "What would you ask if they came as Santa Claus to your home?\n Drop your Christmas wishes here✍️",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 1,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GCMmwNfacAAKGQM?format=png&name=900x900"
+      ]
+    },
+    {
+      "id": 7,
+      "tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 0,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360"
+      ]
+    },
+    {
+      "id": 8,
+      "tweet": "Squads of KKR, CSK, & SRH in IPL 2024.",
+      "userId": 1,
+      "stats": {
+        "comments": 103,
+        "retweets": 636,
+        "likes": 0,
+        "views": "341K"
+      },
+      "images": [
+        "https://pbs.twimg.com/media/GBuQ77_W4AAAT9C?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ9MIWYAEq3Ta?format=jpg&name=360x360",
+        "https://pbs.twimg.com/media/GBuQ-RCXIAA3Y06?format=jpg&name=360x360"
+      ]
+    }
+  ],
+  "bookmarks": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1,
+      "bookmarkedBy": 0
+    },
+    {
+      "id": 2,
+      "userId": 0,
+      "postId": 2,
+      "bookmarkedBy": 0
+    }
+  ],
+  "likes": [
+    {
+      "id": 0,
+      "userId": 1,
+      "postId": 1,
+      "likedBy": 0
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "postId": 2,
+      "likedBy": 0
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "postId": 3,
+      "likedBy": 0
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "postId": 6,
+      "likedBy": 1
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "postId": 6,
+      "likedBy": 0
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "postId": 3,
+      "likedBy": 1
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "postId": 4,
+      "likedBy": 0
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "postId": 5,
+      "likedBy": 0
+    }
+  ],
+  "retweets": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "userId": 0,
+      "postId": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "userId": 0,
+      "postId": 1,
+      "tweet": "This is my comment to your post!!",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      },
+      "replies": [
+        {
+          "id": 3,
+          "userId": 0,
+          "postId": 1,
+          "tweet": "This is 2nd my comment to your post!!",
+          "stats": {
+            "comments": 0,
+            "retweets": 0,
+            "likes": 0,
+            "views": 200
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "postId": 1,
+      "tweet": "Beautiful posts explaining stuff!",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      }
+    },
+    {
+      "id": 3,
+      "userId": 0,
+      "postId": 1,
+      "tweet": "This is 2nd my comment to your post!!",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      }
+    },
+    {
+      "id": 4,
+      "userId": 0,
+      "postId": 1,
+      "tweet": "This is a new reply",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      }
+    },
+    {
+      "id": 5,
+      "userId": 0,
+      "postId": 1,
+      "tweet": "This is my new test reply",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      }
+    },
+    {
+      "id": 6,
+      "userId": 0,
+      "postId": 2,
+      "tweet": "This is my reply to this cat",
+      "stats": {
+        "comments": 0,
+        "retweets": 0,
+        "likes": 0,
+        "views": 200
+      }
+    }
+  ]
 }
