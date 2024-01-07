@@ -8,6 +8,7 @@ export interface PostProps {
 export interface PostType extends PostProps {
   id: number;
   userId: number;
+  postId?: number;
   user?: User;
   likes?: number[] | null;
   bookmarks?: number[] | null;
@@ -24,6 +25,11 @@ export interface User {
   joiningDate?: string;
   followers: number[];
   following: number[];
+}
+
+export interface Comments extends PostType {
+  postId: number;
+  replies: Comments[] | [];
 }
 
 export interface StatsProps {

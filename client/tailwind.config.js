@@ -12,6 +12,7 @@ export default {
         "accent-dark": "#16181C",
         "hover-dark": "#080808",
         "btn-dark": "#1D9BF0",
+        "btn-dark-hover": "#0f8ee3",
         "hover-bg-highlight": "#495968",
         dropdownHoverBg: "#84c0f2",
         commentHoverBg: "#050f18",

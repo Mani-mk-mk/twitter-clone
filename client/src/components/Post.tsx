@@ -23,7 +23,6 @@ const Post = (props: PostType) => {
   // console.log(`Post id ${props.id}: ${postLiked}`);
 
   useEffect(() => {
-    // console.log("Props likes ", props.likes);
     if (props.likes) setPostLiked(props.likes.includes(props.id));
     if (props.bookmarks) setPostBookmarked(props.bookmarks.includes(props.id));
   }, [props.bookmarks, props.id, props.likes]);

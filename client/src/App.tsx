@@ -123,7 +123,12 @@ function App() {
             path="/posts/:postId"
             element={
               <div className="mb-[60px] ml-0 md:mb-0 md:ml-[90px] lg:ml-[300px]">
-                <PostView />
+                <PostView
+                  showAlerts={showAlerts}
+                  setShowAlerts={setShowAlerts}
+                  alertMessage={alertMessage}
+                  setAlertMessage={setAlertMessage}
+                />
               </div>
             }
           />

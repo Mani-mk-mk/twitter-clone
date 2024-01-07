@@ -6,7 +6,14 @@ import { useParams } from "react-router-dom";
 import UserDetailsTab from "../components/UserDetailsTab";
 import SinglePostView from "../components/SinglePostView";
 
-const PostView = () => {
+interface PostViewPropsType {
+  showAlerts: boolean;
+  setShowAlerts: React.Dispatch<React.SetStateAction<boolean>>;
+  alertMessage: string;
+  setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const PostView = (props: PostViewPropsType) => {
   const [post, setPost] = useState<PostType | null>(null);
 
   const { postId } = useParams();
@@ -36,7 +43,15 @@ const PostView = () => {
         userName={post?.user?.userName}
       />
 
-      {post && <SinglePostView post={post} />}
+      {post && (
+        <SinglePostView
+          showAlerts={props.showAlerts}
+          setShowAlerts={props.setShowAlerts}
+          alertMessage={props.alertMessage}
+          setAlertMessage={props.setAlertMessage}
+          post={post}
+        />
+      )}
     </main>
   );
 };
