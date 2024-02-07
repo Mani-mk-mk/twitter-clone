@@ -8,37 +8,21 @@
       "profilePictureUri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXUEK5jt09bSPIUd4TRdnuUVBTVVhcaqV0zrd2MQje6-VviQF6k0iYC5ccn_r01Mwo74M&usqp=CAU",
       "bannerUri": "https://e0.pxfuel.com/wallpapers/638/176/desktop-wallpaper-headers-by-jaxon-twitter-header-hypebeast-header.jpg",
       "bio": "This is the default account you'll be using when clicked on Sign in",
-      "following": [
-        2,
-        3
-      ],
-      "followers": [
-        2,
-        3
-      ],
+      "following": [2, 3],
+      "followers": [2, 3],
       "location": "Mumbai, India",
       "joiningDate": "April 2023"
     },
     {
       "id": 1,
       "userName": "@CricCrazyJohns",
-      "postId": [
-        1,
-        5,
-        6
-      ],
+      "postId": [1, 5, 6],
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1570500099373170688/VVVytBl2_400x400.jpg",
       "profileName": "Johns.",
       "bannerUri": "https://pbs.twimg.com/profile_banners/743735095308099585/1702229397/600x200",
       "bio": "IPL, Mohanlal, Vijay, Cringe guy, Average in English, When people hate me, I find happiness through the hate. For Collaborations - DM",
-      "following": [
-        2,
-        3
-      ],
-      "followers": [
-        2,
-        3
-      ],
+      "following": [2, 3],
+      "followers": [2, 3],
       "location": "Kerala, India",
       "joiningDate": "June 2016",
       "attachments": "instagram.com/johns_benny_ccj"
@@ -47,9 +31,7 @@
       "id": 2,
       "userName": "@JJK_Mya",
       "profileName": "JJK (Mya)",
-      "postId": [
-        2
-      ],
+      "postId": [2],
       "bannerUri": "https://pbs.twimg.com/profile_banners/1650898234867433476/1697475122/600x200",
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1650899539350679554/NBoN9Bcr_400x400.jpg",
       "following": [],
@@ -60,10 +42,7 @@
     {
       "id": 3,
       "userName": "@NarutoVibe",
-      "postId": [
-        3,
-        4
-      ],
+      "postId": [3, 4],
       "profileName": "Naruto 🍜",
       "profilePictureUri": "https://pbs.twimg.com/profile_images/1155233536913203201/4WGRaO8C_400x400.jpg",
       "bannerUri": "https://pbs.twimg.com/profile_banners/2931675387/1608702213/600x200",

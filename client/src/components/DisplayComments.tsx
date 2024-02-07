@@ -1,35 +1,51 @@
-import { useEffect } from "react";
-import axiosInstance from "../utils/axios";
-import { PostType } from "../types/PostTypes";
+import { useEffect, useState } from "react";
+import { CommentTypeFB } from "../types/PostTypes";
 import Post from "./Post";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import db from "../firebase.js";
 
 interface CommentPropsType {
-  postId: number;
-  comments: PostType[] | null;
-  setComments: React.Dispatch<React.SetStateAction<PostType[] | null>>;
+  postId: string;
+  comments: CommentTypeFB[] | null;
+  setComments: React.Dispatch<React.SetStateAction<CommentTypeFB[] | null>>;
 }
 
 const DisplayComments = (props: CommentPropsType) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const getComments = async () => {
       try {
-        const response = await axiosInstance.get(
-          `/comments?postId=${props.postId}&_expand=user`,
+        setIsLoading(true);
+        const postRef = doc(db, "posts/" + props.postId);
+        const q = query(
+          collection(db, "comments"),
+          where("postId", "==", postRef),
         );
-        if (response.status === 200) {
-          console.log(response.data);
-          props.setComments(response.data);
-        }
+        const commentSnapshot = await getDocs(q);
+        commentSnapshot.forEach((commentDoc) => {
+          console.log(commentDoc.data());
+        });
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
     getComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.postId]);
 
   return (
     <>
-      {props.comments?.map((comment, key) => <Post key={key} {...comment} />)}
+      {isLoading ? (
+        <div className="text-2xl text-white">Loading...</div>
+      ) : (
+        props.comments?.map((comment, key) => {
+          if (comment.id) return <Post key={key} {...comment} />;
+          else return null;
+        })
+      )}
     </>
   );
 };

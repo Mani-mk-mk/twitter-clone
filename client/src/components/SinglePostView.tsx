@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { PostType } from "../types/PostTypes";
+import { CommentTypeFB, PostTypeFB } from "../types/PostTypes";
 import Comment from "./Comment";
-import DisplayComments from "./DisplayComments";
+// import DisplayComments from "./DisplayComments";
 import RenderImage from "./RenderImage";
 import Stats from "./Stats";
+import DisplayComments from "./DisplayComments";
 
 interface SinglePostViewProps {
-  post: PostType;
+  post: PostTypeFB;
   showAlerts: boolean;
   setShowAlerts: React.Dispatch<React.SetStateAction<boolean>>;
   alertMessage: string;
@@ -14,7 +15,7 @@ interface SinglePostViewProps {
 }
 
 const SinglePostView = (props: SinglePostViewProps) => {
-  const [comments, setComments] = useState<PostType[] | null>(null);
+  const [comments, setComments] = useState<CommentTypeFB[] | null>(null);
 
   return (
     <div>
@@ -47,7 +48,7 @@ const SinglePostView = (props: SinglePostViewProps) => {
           setShowAlerts={props.setShowAlerts}
           alertMessage={props.alertMessage}
           setAlertMessage={props.setAlertMessage}
-          postId={props.post.id}
+          postId={props.post.id!}
         />
       </div>
       <div>

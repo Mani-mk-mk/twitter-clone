@@ -1,4 +1,4 @@
-import { PostType, StatsProps } from "../types/PostTypes";
+import { PostTypeFB, StatsProps } from "../types/PostTypes";
 import ActionIcon from "./ActionIcon";
 import CommentIcon from "../assets/icons/CommentIcon";
 import BookmarkIcon from "../assets/icons/BookmarksIcon";
@@ -10,24 +10,46 @@ import MorePostIcon from "../assets/icons/MorePostIcon";
 import { Link } from "react-router-dom";
 import RenderImage from "./RenderImage";
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/axios";
-import HoverInfo from "./HoverInfo";
+// import HoverInfo from "./HoverInfo";
+import db from "../firebase.js";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
-const Post = (props: PostType) => {
+const Post = (props: PostTypeFB) => {
+  // console.log("UserId: ", props.userId);
   const [postLiked, setPostLiked] = useState(false);
   const [postBookmarked, setPostBookmarked] = useState(false);
   const [stats, setStats] = useState<StatsProps | undefined>(props.stats);
 
-  const defaultUserId = 0;
-
-  // console.log(`Post id ${props.id}: ${postLiked}`);
-
   useEffect(() => {
-    if (props.likes) setPostLiked(props.likes.includes(props.id));
-    if (props.bookmarks) setPostBookmarked(props.bookmarks.includes(props.id));
+    if (props.likes) {
+      if (props.likes.posts[props.id!]) {
+        setPostLiked(true);
+      }
+    }
+
+    if (props.bookmarks) {
+      if (props.bookmarks.posts[props.id!]) {
+        setPostBookmarked(true);
+      }
+    }
+    // if (props.bookmarks) setPostBookmarked(props.bookmarks.includes(props.id));
   }, [props.bookmarks, props.id, props.likes]);
 
   const likePost = async (event: React.MouseEvent) => {
+    const userRef = doc(db, "users/" + "9NzY4bJf6DaSRpKXO4AA");
+    const postRef = doc(db, "posts/" + props.id);
+    const likeCollection = collection(db, "likes");
+
     try {
       event.preventDefault();
       setPostLiked((prevLikeStatus) => !prevLikeStatus);
@@ -35,66 +57,97 @@ const Post = (props: PostType) => {
       if (!props.userId || !props.id) {
         throw new Error("Invalid user ID or post ID");
       }
-      const maxLikeIdResponse = await axiosInstance.get(
-        "/likes?_sort=id&_order=desc",
-      );
-      if (maxLikeIdResponse.status !== 200) {
-        throw new Error("Failed to fetch maxLikeId");
-      }
-      const maxLikeId = maxLikeIdResponse.data[0]?.id || 0;
-
       const likes = stats && stats?.likes + (postLiked ? -1 : 1);
       setStats((prevStats) => {
-        if (prevStats) return { ...prevStats, likes: prevStats?.likes + 1 };
+        if (prevStats) return { ...prevStats, likes: likes! };
       });
 
       if (postLiked) {
-        await axiosInstance.delete(`/likes/${props.id}`);
-      } else {
-        await axiosInstance.post("/likes", {
-          id: maxLikeId + 1,
-          userId: props.userId,
-          postId: props.id,
-          likedBy: defaultUserId,
+        const q = query(
+          collection(db, "likes"),
+          where("userId", "==", userRef),
+          where("postId", "==", postRef),
+        );
+        const likesSnapshot = await getDocs(q);
+        console.log(likesSnapshot);
+        let likeId = "";
+        likesSnapshot.forEach((like) => {
+          console.log("This is the likes data...");
+          console.log("LikeID: " + like.id);
+          likeId = like.id;
         });
+        await deleteDoc(doc(db, "likes", likeId));
+      } else {
+        const likeData = {
+          userId: userRef,
+          postId: postRef,
+        };
+        const response = await addDoc(likeCollection, likeData);
+        if (!response.id) {
+          setPostLiked((prevLikeStatus) => !prevLikeStatus);
+        } else {
+          console.log("Liked successfully! => ", response.id);
+        }
       }
 
-      await axiosInstance.patch(`/posts/${props.id}`, {
-        stats: { ...stats, likes },
+      await setDoc(postRef, {
+        ...props,
+        createdAt: props.createdAt,
+        userId: userRef,
+        stats: {
+          likes: likes!,
+          comments: props.stats?.comments,
+          retweets: props.stats?.retweets,
+          views: props.stats?.views,
+        },
       });
     } catch (error) {
       // ErrorHandling
       console.error("Error in likePost:", error);
       // Rollback UI update if necessary
       setPostLiked((prevLikeStatus) => !prevLikeStatus);
+      setStats((prevStats) => {
+        if (prevStats) return { ...prevStats, likes: prevStats.likes - 1 };
+      });
     }
   };
 
   const bookmarkPost = async (event: React.MouseEvent) => {
     event.preventDefault();
+    const userRef = doc(db, "users/" + "9NzY4bJf6DaSRpKXO4AA");
+    const postRef = doc(db, "posts/" + props.id);
+    const bookmarksCollection = collection(db, "bookmarks");
     setPostBookmarked((prevBookmarkStatus) => !prevBookmarkStatus);
-    let maxBookmarkId: number = 0;
-    const response = await axiosInstance.get("/bookmarks?_sort=id&_order=desc");
-    console.log(response);
-    if (response.status === 200) {
-      maxBookmarkId = response.data[0].id;
-    }
 
-    try {
-      if (!postBookmarked) {
-        const response = await axiosInstance.post("/bookmarks", {
-          id: maxBookmarkId + 1,
-          userId: props.userId,
-          postId: props.id,
-          bookmarkedBy: defaultUserId,
-        });
-        console.log(response.status);
+    if (postBookmarked) {
+      console.log("Already bookmarked");
+      const q = query(
+        collection(db, "bookmarks"),
+        where("userId", "==", userRef),
+        where("postId", "==", postRef),
+      );
+      const bookmarksSnapshot = await getDocs(q);
+      console.log(bookmarksSnapshot);
+      let bookmarkId = "";
+
+      bookmarksSnapshot.forEach((bookmark) => {
+        console.log("This is the bookmarks data...");
+        console.log("BookmarkID: " + bookmark.id);
+        bookmarkId = bookmark.id;
+      });
+      await deleteDoc(doc(db, "bookmarks", bookmarkId));
+    } else {
+      const bookmarkData = {
+        userId: userRef,
+        postId: postRef,
+        bookmarkedAt: Timestamp.now(),
+      };
+      const response = await addDoc(bookmarksCollection, bookmarkData);
+      if (!response.id) {
+        setPostLiked((prevLikeStatus) => !prevLikeStatus);
       } else {
-        const response = await axiosInstance.delete("/bookmarks/" + props.id);
-        console.log(response);
+        console.log("Bookmarked successfully! => ", response.id);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -109,7 +162,7 @@ const Post = (props: PostType) => {
               alt="user-profile-picture"
             />
             <div className="relative z-10 hidden group-hover:block">
-              {props.user && <HoverInfo {...props.user!} />}
+              {/* {props.user && <HoverInfo {...props.user!} />} */}
             </div>
           </Link>
         </div>

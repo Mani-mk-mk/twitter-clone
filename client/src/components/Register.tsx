@@ -9,7 +9,7 @@ interface Props {}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Register = (_props: Props) => {
   return (
-    <div className="mb-[60px] flex h-screen w-screen justify-center dark:bg-dark md:mb-0 md:items-start lg:items-center lg:py-8">
+    <div className="mb-[60px] flex h-screen w-full justify-center dark:bg-dark md:mb-0 md:items-start lg:items-center lg:py-8">
       <div className="flex w-full justify-center">
         <div className="mx-auto flex flex-col p-8 lg:w-full lg:flex-row lg:gap-8">
           <div className="my-4 w-[50px] lg:my-auto lg:w-[55%]">

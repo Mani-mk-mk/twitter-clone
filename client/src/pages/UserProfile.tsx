@@ -10,13 +10,16 @@ import AttachmentIcon from "../assets/icons/AttachmentIcon";
 import CalendarIcon from "../assets/icons/CalendarIcon";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
-import { PostsByUserDataType, ProfileDataType } from "../types/PostTypes";
+import { PostsByUserDataType, UserFB } from "../types/PostTypes";
 import FullScreenLoader from "../components/FullScreenLoader";
 import UserPostTab from "../components/UserPostTab";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import db from "../firebase.js";
+import PostsMadeByUser from "../components/PostsMadeByUser.js";
 
 const UserProfile = () => {
   const [profileTabIndex, setProfileTabIndex] = useState(0);
-  const [profileData, setProfileData] = useState<ProfileDataType | null>(null);
+  const [profileData, setProfileData] = useState<UserFB | null>(null);
   const [postsByUser, setPostsByUser] = useState<PostsByUserDataType | null>(
     null,
   );
@@ -30,12 +33,28 @@ const UserProfile = () => {
 
     const fetchData = async () => {
       try {
-        const profileDataResponse = await axiosInstance.get(
-          `users?userName=@${userName}`,
+        const usersCollection = collection(db, "users");
+        const q = query(
+          usersCollection,
+          where("userName", "==", "@" + userName?.slice(0)),
         );
-        if (profileDataResponse.status === 200) {
-          setProfileData(profileDataResponse.data[0]);
-        }
+        const userSnapshot = await getDocs(q);
+        console.log(userSnapshot);
+        userSnapshot.forEach((userSnap) => {
+          console.log(userSnap.data());
+          const data: UserFB = {
+            id: userSnap.id,
+            userName: userSnap.data().userName,
+            profileName: userSnap.data().profileName,
+            bannerUri: userSnap.data().bannerUri,
+            bio: userSnap.data().bio,
+            profilePictureUri: userSnap.data().profilePictureUri,
+            joiningDate: userSnap.data().joiningDate,
+            location: userSnap.data().location,
+          };
+          console.log(data);
+          setProfileData(data);
+        });
 
         if (profileTabIndex === 0) {
           const postsResponse = await axiosInstance.get(
@@ -54,7 +73,7 @@ const UserProfile = () => {
     };
 
     fetchData();
-  }, [profileData?.id, profileTabIndex, userName]);
+  }, [profileTabIndex, userName]);
 
   useEffect(() => {
     // console.log(postsByUser);
@@ -162,15 +181,11 @@ const UserProfile = () => {
             {/* Follower Details */}
             <div className="flex items-start gap-4 py-2 text-lg">
               <div>
-                <span className="mr-4 font-roboto font-bold">
-                  {profileData?.following?.length}
-                </span>
+                <span className="mr-4 font-roboto font-bold">{2}</span>
                 <span className="text-unhighlighted-color">Following</span>
               </div>
               <div>
-                <span className="mr-4 font-roboto font-bold">
-                  {profileData?.followers?.length}
-                </span>
+                <span className="mr-4 font-roboto font-bold">{2}</span>
                 <span className="text-unhighlighted-color">Followers</span>
               </div>
             </div>
@@ -187,20 +202,23 @@ const UserProfile = () => {
           </div>
           {/* </div> */}
 
-          {/* {postsByUser?.posts.map((post, key) => {
-            if (!profileData) {
-              return;
-            }
-            post["user"] = profileData;
-            console.log(postsByUser);
-            return <Post {...post} key={key} />;
-          })} */}
-          <UserPostTab
-            tabIndex={profileTabIndex}
-            profileData={profileData}
-            userId={profileData ? profileData.id : 0}
-            postsByUser={postsByUser}
-          />
+          {profileTabIndex === 0 && (
+            <PostsMadeByUser
+              tabIndex={profileTabIndex}
+              profileData={profileData}
+              postsByUser={postsByUser}
+              setPostsByUser={setPostsByUser}
+            />
+          )}
+
+          {profileTabIndex === 2 && (
+            <UserPostTab
+              tabIndex={profileTabIndex}
+              profileData={profileData}
+              userId={profileData ? profileData.id : 0}
+              postsByUser={postsByUser}
+            />
+          )}
         </main>
       )}
     </>

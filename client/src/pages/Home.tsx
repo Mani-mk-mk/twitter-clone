@@ -1,21 +1,27 @@
 import HomeHeader from "../components/HomeHeader";
-// import posts from "../data/post";
 import PostBox from "../components/PostBox";
 import Post from "../components/Post";
 import { HeaderProps } from "../types/types";
 import { useCallback, useEffect, useRef, useState } from "react";
-import axiosInstance from "../utils/axios";
-// import { PostType } from "../types/PostTypes";
 import { Link } from "react-router-dom";
-import usePostSearch from "../utils/usePostSearch";
 import FullScreenLoader from "../components/FullScreenLoader";
-
-interface BookmarkType {
-  id: number;
-  userId: number;
-  postId: number;
-  bookmarkedBy: number;
-}
+import { LikesArrayType, PostTypeFB } from "../types/PostTypes";
+import db from "../firebase.js";
+import {
+  DocumentData,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  doc,
+  where,
+  Query,
+  documentId,
+  getCountFromServer,
+  startAfter,
+} from "firebase/firestore";
+import usePostSearch from "../utils/usePostSearch.js";
 
 interface HomeProps extends HeaderProps {
   showAlerts: boolean;
@@ -28,12 +34,53 @@ const Home = (props: HomeProps) => {
   const observer = useRef<IntersectionObserver | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  // const [posts, setPosts] = useState<PostTypeFB[] | null>([]);
+  const [countDocs, setCountDocs] = useState(0);
+  const [queryRequest, setQueryRequest] =
+    useState<Query<DocumentData, DocumentData>>();
 
-  const { posts, setPosts } = usePostSearch({
-    pageNumber,
-    isLoading,
-    setIsLoading,
+  const { posts, lastKey, setPosts } = usePostSearch({
+    q: queryRequest,
+    pageNumber: pageNumber,
   });
+
+  useEffect(() => {
+    console.log("PageNumber: " + pageNumber);
+    const getDocsCount = async () => {
+      const countQuery = query(collection(db, "posts"));
+      const snapShot = await getCountFromServer(countQuery);
+      setCountDocs(snapShot.data().count);
+    };
+
+    getDocsCount();
+
+    const postCollection = collection(db, "posts");
+    console.log("Posts Length: ", posts?.length);
+    console.log("Coutn Docs: " + countDocs);
+    if (posts?.length === countDocs) {
+      console.log("Got the required docs.");
+      return;
+    }
+
+    if (pageNumber === 1) {
+      // const limitData = Math.min(5, countDocs);
+      setQueryRequest(query(postCollection, orderBy(documentId()), limit(5)));
+    } else if (pageNumber > 1) {
+      // setQueryRequest(undefined);
+      if (!posts) return;
+      const limitData = Math.min(5, Math.abs(posts.length - countDocs));
+      setQueryRequest(
+        query(
+          postCollection, 
+          orderBy(documentId()),
+          startAfter(lastKey),
+          limit(limitData),
+        ),
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageNumber]);
 
   const lastBookElementRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return;
@@ -49,31 +96,42 @@ const Home = (props: HomeProps) => {
     observer.current.observe(node);
   }, []);
 
-  const [bookmarks, setBookmarks] = useState<null | number[]>(null);
-  const [likes, setLikes] = useState<null | number[]>(null);
-
-  const defaultUserId = 0;
+  const [bookmarks, setBookmarks] = useState<null | LikesArrayType>(null);
+  const [likes, setLikes] = useState<null | LikesArrayType>(null);
 
   useEffect(() => {
     try {
       const getBookmarks = async () => {
-        const response = await axiosInstance.get(
-          "/bookmarks?bookmarkedBy=" + defaultUserId,
+        const q = query(
+          collection(db, "bookmarks"),
+          where("userId", "==", doc(db, "users/9NzY4bJf6DaSRpKXO4AA")),
         );
-        if (response.status === 200) {
-          setBookmarks(response.data.map((data: BookmarkType) => data.postId));
-        }
+        const bookmarksSnapshot = await getDocs(q);
+        const posts: { [key: string]: boolean } = {};
+        bookmarksSnapshot.forEach((doc) => {
+          posts[doc.data().postId._key.path.segments[6]] = true;
+        });
+        setBookmarks({
+          posts: posts,
+        });
       };
-      getBookmarks();
 
       const getLikes = async () => {
-        const response = await axiosInstance.get(
-          "/likes/?likedBy=" + defaultUserId,
+        const q = query(
+          collection(db, "likes"),
+          where("userId", "==", doc(db, "users/9NzY4bJf6DaSRpKXO4AA")),
         );
-        if (response.status === 200) {
-          setLikes(response.data.map((data: BookmarkType) => data.postId));
-        }
+        const likesSnapshot = await getDocs(q);
+        const posts: { [key: string]: boolean } = {};
+        likesSnapshot.forEach((doc) => {
+          posts[doc.data().postId._key.path.segments[6]] = true;
+        });
+        setLikes({
+          posts: posts,
+        });
       };
+
+      getBookmarks();
       getLikes();
     } catch (error) {
       console.log(error);
@@ -102,10 +160,11 @@ const Home = (props: HomeProps) => {
               setPosts={setPosts}
             />
           </div>
-          {posts?.map((post, key) => {
+
+          {posts?.map((post: PostTypeFB, key: number) => {
             if (key + 1 === posts.length)
               return (
-                <div ref={lastBookElementRef}>
+                <div key={key} ref={lastBookElementRef}>
                   <Link to={`/posts/${post.id}`}>
                     <Post
                       {...post}

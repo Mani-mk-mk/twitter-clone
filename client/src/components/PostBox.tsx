@@ -6,13 +6,15 @@ import PollIcon from "../assets/icons/PollIcon";
 import ActionIcon from "./ActionIcon";
 import Polls from "./Polls";
 import EmojiPicker, { EmojiStyle, Theme } from "emoji-picker-react";
-import axiosInstance from "../utils/axios";
-import { PostType, StatsProps, User } from "../types/PostTypes";
+// import axiosInstance from "../utils/axios";
+import { PostTypeFB, StatsProps, UserFB } from "../types/PostTypes";
 import { Link } from "react-router-dom";
+import { Timestamp, addDoc, collection, doc, getDoc } from "firebase/firestore";
+import db from "../firebase.js";
 
 interface PostBoxProps {
-  posts: PostType[] | null;
-  setPosts: React.Dispatch<React.SetStateAction<PostType[] | null>>;
+  posts: PostTypeFB[] | null;
+  setPosts: React.Dispatch<React.SetStateAction<PostTypeFB[] | null>>;
   showAlerts: boolean;
   setShowAlerts: React.Dispatch<React.SetStateAction<boolean>>;
   alertMessage: string;
@@ -30,28 +32,32 @@ const PostBox = (props: PostBoxProps) => {
 
   const [showEmojiPicker, setShowEmojiPickers] = useState(false);
   const [showPolls, setShowPolls] = useState(false);
-  const [profileData, setProfileData] = useState<User | null>(null);
-  const [maximumPostId, setMaximumPostId] = useState(0);
+  const [profileData, setProfileData] = useState<UserFB | null>(null);
 
   const toggleEmojiPicker = () => {
     setShowEmojiPickers((showEmojiPicker) => !showEmojiPicker);
   };
 
+  //Get the user details from the db
   useEffect(() => {
     const getUserDetail = async () => {
-      const response = await axiosInstance.get("users/0");
-      if (response.status === 200) {
-        setProfileData(response.data);
+      const userRef = doc(db, "users", "9NzY4bJf6DaSRpKXO4AA");
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const data: UserFB = {
+          id: userSnap.id,
+          userName: userSnap.data().userName,
+          profileName: userSnap.data().profileName,
+          bannerUri: userSnap.data().bannerUri,
+          bio: userSnap.data().bio,
+          profilePictureUri: userSnap.data().profilePictureUri,
+        };
+        setProfileData(data);
       }
     };
-    const getMaxPostId = async () => {
-      const response = await axiosInstance.get("/posts?_sort=id&_order=desc");
-      if (response.status === 200) {
-        setMaximumPostId(response.data[0].id);
-      }
-    };
+
     getUserDetail();
-    getMaxPostId();
   }, []);
 
   const handleActionIconClick = () => {
@@ -71,17 +77,17 @@ const PostBox = (props: PostBoxProps) => {
       retweets: 0,
     };
 
-    const data: PostType = {
-      id: maximumPostId + 1,
-      userId: 0,
+    const data: PostTypeFB = {
+      userId: doc(db, "users", "9NzY4bJf6DaSRpKXO4AA"),
       user: profileData!,
       tweet: tweet,
       stats: defaultStats,
+      createdAt: Timestamp.now(),
     };
 
     try {
-      const response = await axiosInstance.post("/posts", data);
-      if (response.status === 201) {
+      const postRef = await addDoc(collection(db, "posts"), data);
+      if (postRef.id) {
         props.setPosts([data, ...props.posts!]);
         setTweet("");
         props.setAlertMessage("Posted successfully.");
@@ -91,6 +97,7 @@ const PostBox = (props: PostBoxProps) => {
         }, 3000); // Hide the alert after 5 seconds
       }
     } catch (error) {
+      console.log(error);
       props.setAlertMessage("Something went wrong.");
       props.setShowAlerts(true);
       setTimeout(() => {
@@ -203,6 +210,7 @@ const PostBox = (props: PostBoxProps) => {
           </div>
         </div>
       </div>
+      )
     </div>
   );
 };

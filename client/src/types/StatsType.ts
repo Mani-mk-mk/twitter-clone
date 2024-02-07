@@ -1,9 +1,9 @@
-import { PostType, User } from "./PostTypes";
+import { PostTypeFB, UserFB } from "./PostTypes";
 
 export interface BookmarksType {
-  id: number;
+  id: string;
   userId: number;
   postId: number;
-  user: User;
-  post: PostType;
+  user: UserFB;
+  post: PostTypeFB;
 }

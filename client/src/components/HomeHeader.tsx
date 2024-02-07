@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const HomeHeader = (props: HeaderProps) => {
-  console.log(props);
+  // console.log(props);
 
   const headerComponents = [
     <div className="flex h-full w-full items-center justify-between dark:bg-dark">

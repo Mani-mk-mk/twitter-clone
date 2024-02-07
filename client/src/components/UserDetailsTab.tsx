@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import MorePostIcon from "../assets/icons/MorePostIcon";
 import ActionIcon from "./ActionIcon";
-import HoverInfo from "./HoverInfo";
-import { User } from "../types/PostTypes";
+// import HoverInfo from "./HoverInfo";
+import { UserFB } from "../types/PostTypes";
 
 interface UserDetailsProps {
   profilePictureUri: string | undefined;
   profileName: string | undefined;
   userName: string | undefined;
-  user: User | undefined;
+  user: UserFB | null;
 }
 
 const UserDetailsTab = (props: UserDetailsProps) => {
+  console.log(props.user);
   return (
     <div className="flex  items-center gap-4 p-4 text-white">
       <div className="group h-[50px] w-[50px] rounded-full">
@@ -22,7 +23,7 @@ const UserDetailsTab = (props: UserDetailsProps) => {
             alt="profile-image"
           />
           <div className="relative z-10 hidden group-hover:block">
-            {props.user && <HoverInfo {...props.user} />}
+            {/* {props.user && <HoverInfo {...props.user} />} */}
           </div>
         </Link>
       </div>
@@ -34,7 +35,7 @@ const UserDetailsTab = (props: UserDetailsProps) => {
                 {props.profileName}
               </h1>
               <div className="relative z-10 hidden group-hover:block">
-                {props.user && <HoverInfo {...props.user} />}
+                {/* {props.user && <HoverInfo {...props.user} />} */}
               </div>
             </Link>
           </div>
@@ -42,7 +43,7 @@ const UserDetailsTab = (props: UserDetailsProps) => {
             <Link to={`/${props.userName?.slice(1)}`}>
               <p className="text-unhighlighted-color">{props.userName}</p>
               <div className="relative z-10 hidden group-hover:block">
-                {props.user && <HoverInfo {...props.user} />}
+                {/* {props.user && <HoverInfo {...props.user} />} */}
               </div>
             </Link>
           </div>

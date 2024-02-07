@@ -1,4 +1,6 @@
+import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 import { BookmarksType } from "./StatsType";
+import { CommentType } from "./CommentType";
 
 export interface PostProps {
   tweet?: string;
@@ -6,25 +8,71 @@ export interface PostProps {
   stats?: StatsProps;
 }
 export interface PostType extends PostProps {
-  id: number;
-  userId: number;
+  id?: number | string;
+  userId: number | string;
   postId?: number;
   user?: User;
   likes?: number[] | null;
   bookmarks?: number[] | null;
 }
-export interface User {
-  id: number;
+
+export interface LikesArrayType {
+  posts: { [key: string]: boolean };
+}
+
+export interface PostTypeFB extends PostProps {
+  id: string;
+  userId: DocumentReference<DocumentData, DocumentData>;
+  user?: UserFB | null;
+  likes?: LikesArrayType | null;
+  bookmarks?: LikesArrayType | null;
+  createdAt: Timestamp;
+}
+
+export interface CommentTypePostFB {
+  userId: DocumentReference<DocumentData, DocumentData>;
+  postId?: DocumentReference<DocumentData, DocumentData>;
+  commentId?: DocumentReference<DocumentData, DocumentData>;
+  user?: UserFB | null;
+  tweet?: string;
+  images?: string[];
+  stats?: StatsProps;
+  likes?: LikesArrayType | null;
+  bookmarks?: LikesArrayType | null;
+  createdAt: Timestamp;
+
+}
+
+export interface CommentTypeFB extends CommentTypePostFB {
+  id: string;
+}
+
+export interface UserFB {
+  id: string;
   userName: string;
-  postId: number[];
+  attachments?: string;
   profilePictureUri: string;
   profileName: string;
   bannerUri: string;
   bio?: string;
   location?: string;
   joiningDate?: string;
-  followers: number[];
-  following: number[];
+  followers?: number;
+  following?: number;
+}
+
+export interface User {
+  id: number | string;
+  userName: string;
+  postId?: number[];
+  profilePictureUri: string;
+  profileName: string;
+  bannerUri: string;
+  bio?: string;
+  location?: string;
+  joiningDate?: string;
+  followers?: number[];
+  following?: number[];
 }
 
 export interface Comments extends PostType {
@@ -58,11 +106,13 @@ export interface ProfileDataType {
   attachments?: string;
 }
 
-export interface PostsByUserDataType extends ProfileDataType {
-  posts: PostType[];
+export interface PostsByUserDataType {
+  posts: PostTypeFB[] | null;
 }
 
-export interface LikePostsByUserDataType extends BookmarksType {
-  post: PostType;
-  user: User;
+export interface LikePostsByUserDataType {
+  userId: DocumentReference<DocumentData, DocumentData>;
+  postId: DocumentReference<DocumentData, DocumentData>;
+  post: PostTypeFB;
+  user: UserFB;
 }

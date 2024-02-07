@@ -42,8 +42,8 @@ function App() {
   const location = useLocation();
 
   return (
-    <React.StrictMode>
-      {/* <Router> */}
+    // <React.StrictMode>
+    <div>
       <div
         data-mode="dark"
         className="relative flex dark:bg-[black] md:justify-center"
@@ -53,7 +53,7 @@ function App() {
           <div>
             <nav
               // ref={navElementRef}
-              className="fixed hidden border-r border-borderColor md:block"
+              className="fixed hidden h-full border-r border-borderColor md:block"
             >
               <Sidebar
                 navIndex={navIndex}
@@ -152,7 +152,8 @@ function App() {
         {showAlerts && <Alerts message={alertMessage} />}
       </div>
       )
-    </React.StrictMode>
+    </div>
+    //</React.StrictMode>
   );
 }
 

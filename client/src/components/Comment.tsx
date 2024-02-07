@@ -1,42 +1,46 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { PostType, User } from "../types/PostTypes";
-import axiosInstance from "../utils/axios";
+import { CommentTypeFB, CommentTypePostFB, UserFB } from "../types/PostTypes";
 import PostActionItem from "./PostActionItem";
+import db from "../firebase.js";
+import { Timestamp, addDoc, collection, doc, getDoc } from "firebase/firestore";
 
 interface CommentPropsType {
-  postId: number;
+  postId: string;
   showAlerts: boolean;
   setShowAlerts: React.Dispatch<React.SetStateAction<boolean>>;
   alertMessage: string;
   setAlertMessage: React.Dispatch<React.SetStateAction<string>>;
-  comments: PostType[] | null;
-  setComments: React.Dispatch<React.SetStateAction<PostType[] | null>>;
+  comments: CommentTypeFB[] | null;
+  setComments: React.Dispatch<React.SetStateAction<CommentTypeFB[] | null>>;
 }
 
 const Comment = (props: CommentPropsType) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserFB | null>(null);
   const [reply, setReply] = useState("");
-  const [maxCommentId, setMaxCommentId] = useState<number>(0);
+  // const [maxCommentId, setMaxCommentId] = useState<number>(0);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axiosInstance.get("/users/0");
-        if (response.status === 200) {
-          setUser(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+        const userRef = doc(db, "users/" + "9NzY4bJf6DaSRpKXO4AA");
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userId = userDoc.id;
+          const userData: UserFB = {
+            id: userId,
+            userName: userDoc.data().userName,
+            profilePictureUri: userDoc.data().profilePictureUri,
+            profileName: userDoc.data().profileName,
+            bannerUri: userDoc.data().bannerUri,
+            joiningDate: userDoc.data().joiningDate,
+            location: userDoc.data().location,
+          };
+          // const user = {
+          //   ...userData,
+          //   id: userDoc.id,
+          // };
 
-    const getMaxCommentId = async () => {
-      try {
-        const response = await axiosInstance.get(
-          "/comments/?_sort=id&_order=desc",
-        );
-        if (response.status === 200) {
-          setMaxCommentId(response.data[0].id);
+          setUser(userData);
         }
       } catch (error) {
         console.log(error);
@@ -44,7 +48,6 @@ const Comment = (props: CommentPropsType) => {
     };
 
     getUser();
-    getMaxCommentId();
   }, []);
 
   const handleReplyChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,20 +63,23 @@ const Comment = (props: CommentPropsType) => {
     };
 
     try {
-      const replyData: PostType = {
-        id: maxCommentId + 1,
-        userId: 0,
-        postId: props.postId,
-        tweet: reply,
+      const replyData: CommentTypePostFB = {
         stats: defaultStats,
+        tweet: reply,
+        postId: doc(db, "posts/" + props.postId),
+        userId: doc(db, "users/" + user?.id),
+        createdAt: Timestamp.now(),
       };
-      const response = await axiosInstance.post("/comments", replyData);
-      replyData["user"] = user!;
-
-      if (response.status === 201) {
+      const commentsCollection = collection(db, "comments");
+      const postReply = await addDoc(commentsCollection, replyData);
+      if (postReply.id) {
+        const reply: CommentTypeFB = {
+          id: postReply.id,
+          ...replyData,
+        };
         console.log("Replied successfully!");
         props.setComments((prevComments) =>
-          prevComments ? [replyData, ...prevComments] : [replyData],
+          prevComments ? [reply, ...prevComments] : [reply],
         );
         props.setAlertMessage("Posted successfully.");
         props.setShowAlerts(true);

@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import {
   LikePostsByUserDataType,
   PostsByUserDataType,
-  ProfileDataType,
+  UserFB,
 } from "../types/PostTypes";
 import axiosInstance from "../utils/axios";
 import Post from "./Post";
 
 interface UserPostTabPropTypes {
   tabIndex: number;
-  userId: number;
+  userId: string | number;
   postsByUser?: PostsByUserDataType | null;
-  profileData?: ProfileDataType | null;
+  profileData?: UserFB | null;
   likePostByUser?: LikePostsByUserDataType[] | null;
 }
 
@@ -47,8 +47,8 @@ const UserPostTab = (props: UserPostTabPropTypes) => {
 
   return (
     <div>
-      {props.tabIndex === 0 &&
-        props.postsByUser?.posts.map((post, key) => {
+      {props.tabIndex === 2 &&
+        props.postsByUser?.posts?.map((post, key) => {
           if (!props.profileData) {
             return;
           }

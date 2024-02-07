@@ -1,63 +1,115 @@
-// usePostSearch.tsx
-import { useEffect, useState } from "react";
-import axiosInstance from "./axios";
-import { PostType } from "../types/PostTypes";
+import { SetStateAction, useEffect, useState } from "react";
+import { PostTypeFB, UserFB } from "../types/PostTypes";
+import db from "../firebase";
+import {
+  CollectionReference,
+  DocumentData,
+  Query,
+  QueryDocumentSnapshot,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
+
+// Function to process a single post and retrieve user information
+const processPost = async (
+  post: QueryDocumentSnapshot<DocumentData, DocumentData>,
+): Promise<PostTypeFB> => {
+  console.log("Handling the post data!!!!!");
+  const singlePost: PostTypeFB = {
+    id: post.id,
+    userId: post.data().userId._key.path.segments[6],
+    stats: post.data().stats,
+    createdAt: post.data().createdAt,
+  };
+  if (post.data().tweet) {
+    singlePost.tweet = post.data().tweet;
+  }
+  if (post.data().images) singlePost.images = post.data().images;
+
+  const userDocRef = doc(db, "users/" + singlePost.userId);
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (userSnapshot.exists()) {
+    const userData = userSnapshot.data();
+    const user: UserFB = {
+      id: userSnapshot.id,
+      userName: userData.userName,
+      profilePictureUri: userData.profilePictureUri,
+      profileName: userData.profileName,
+      bannerUri: userData.bannerUri,
+      joiningDate: userData.joiningDate,
+      location: userData.location,
+    };
+    singlePost.user = user;
+  } else {
+    console.log("User not found");
+  }
+
+  return singlePost;
+};
 
 interface PostSearchProps {
-  pageNumber: number | null;
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  collection?: CollectionReference<DocumentData, DocumentData>;
+  q: Query<DocumentData, DocumentData> | undefined;
+  pageNumber: number;
 }
 
 const usePostSearch = (props: PostSearchProps) => {
-  const [error, setError] = useState(false);
-  const [posts, setPosts] = useState<PostType[] | null>([]);
-  const [hasMore, setHasMore] = useState(false);
-
-  const LIMIT = 5;
+  const { q, pageNumber } = props;
+  const [posts, setPosts] = useState<PostTypeFB[] | null>(null);
+  const [lastKey, setLastKey] = useState<string>("");
 
   useEffect(() => {
-    console.log("Page number: " + props.pageNumber);
-    if (posts === null || props.pageNumber === 1) {
-      console.log("Loading screen");
-      props.setIsLoading(true);
-    }
-    const fetchData = async () => {
-      setError(false);
+    let isSubscribed = true;
+    console.log("PAGE NUMBER: ", pageNumber);
+    console.log("QUERY: ", q);
+    // console.count("Component Rendered");
+    const fetchFirstBatch = async () => {
+      // Ensures q is defined before proceeding
+      if (!q) return;
 
-      try {
-        const response = await axiosInstance.get(
-          `/posts?_expand=user&_limit=${LIMIT}&_page=${props.pageNumber}`,
-        );
-        setHasMore(
-          response.headers["x-total-count"] >=
-            posts?.length + response.data.length,
+      if (isSubscribed) {
+        const postSnapshots = await getDocs(q);
+
+        setLastKey(postSnapshots.docs[postSnapshots.docs.length - 1].id);
+
+        console.log(
+          "Last Key: " + postSnapshots.docs[postSnapshots.docs.length - 1].id,
         );
 
-        setPosts((prevPosts) => {
-          const newPosts = response.data.filter((newPost: { id: number }) => {
-            return !prevPosts?.some((prevPost) => prevPost.id === newPost.id);
+        const processedPosts: SetStateAction<PostTypeFB[] | null> = [];
+
+        // const processedPosts = await Promise.all(
+        for (let index = 0; index < postSnapshots.docs.length; index++) {
+          const temp = await processPost(postSnapshots.docs[index]);
+          processedPosts.push(temp);
+        }
+        //   // postSnapshots.docs.map(async (post) => await processPost(post)),
+        // );
+
+        console.log("Processed POsts below....");
+        console.log(processedPosts.length);
+        if (pageNumber === 1) {
+          setPosts(processedPosts);
+        } else {
+          setPosts((prevPosts) => {
+            const uniquePosts = [
+              ...new Set([...prevPosts!, ...processedPosts]),
+            ];
+            return uniquePosts;
           });
-
-          return prevPosts ? [...prevPosts, ...newPosts] : newPosts;
-        });
-      } catch (err) {
-        console.log(err);
-        setError(true);
-        props.setIsLoading(false);
-      } finally {
-        // if (posts === null) {
-        //   console.log("Removing loading indicator");
-        props.setIsLoading(false);
-        // }
+        }
       }
     };
+    fetchFirstBatch();
 
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.pageNumber]);
+    return () => {
+      isSubscribed = false;
+    };
+  }, [q]);
 
-  return { error, posts, setPosts, hasMore };
+  return { posts, lastKey, setPosts };
 };
 
 export default usePostSearch;
